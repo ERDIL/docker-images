@@ -1,0 +1,2346 @@
+$
+
+ 17:28:09  ...work/docker/docker-ruby2.3.3-elasticsearch1.7.5  ♦️ ruby-2.1.4 
+$ docker build -t ruby2.3.4-es1.7.5 .
+Sending build context to Docker daemon 4.096 kB
+Step 1/14 : FROM elasticsearch:1.7.5
+ ---> 8497e1a8039b
+Step 2/14 : RUN mkdir -p /usr/local/etc 	&& { 		echo 'install: --no-document'; 		echo 'update: --no-document'; 	} >> /usr/local/etc/gemrc
+ ---> Running in 923338ba73a0
+ ---> 1e83f7465bba
+Removing intermediate container 923338ba73a0
+Step 3/14 : ENV RUBY_MAJOR 2.3
+ ---> Running in 62eef73d9295
+ ---> 17cd9d11da88
+Removing intermediate container 62eef73d9295
+Step 4/14 : ENV RUBY_VERSION 2.3.4
+ ---> Running in 225e838a462b
+ ---> 8135db0faa63
+Removing intermediate container 225e838a462b
+Step 5/14 : ENV RUBY_DOWNLOAD_SHA256 341cd9032e9fd17c452ed8562a8d43f7e45bfe05e411d0d7d627751dd82c578c
+ ---> Running in aa48a2f18fce
+ ---> 20cbc853aeda
+Removing intermediate container aa48a2f18fce
+Step 6/14 : ENV RUBYGEMS_VERSION 2.6.11
+ ---> Running in de4f99b0904e
+ ---> 5fe5b7bf3b3f
+Removing intermediate container de4f99b0904e
+Step 7/14 : RUN set -ex 		&& buildDeps='     autoconf 		bison 		gcc 		libbz2-dev 		libgdbm-dev 		libglib2.0-dev 		libncurses-dev 		libreadline-dev 		libxml2-dev 		libxslt-dev 		make 		ruby 		wget 		xz-utils   ' 	&& apt-get update 	&& apt-get install -y --no-install-recommends $buildDeps 	&& rm -rf /var/lib/apt/lists/* 		&& wget -O ruby.tar.xz "https://cache.ruby-lang.org/pub/ruby/${RUBY_MAJOR%-rc}/ruby-$RUBY_VERSION.tar.xz" 	&& echo "$RUBY_DOWNLOAD_SHA256 *ruby.tar.xz" | sha256sum -c - 		&& mkdir -p /usr/src/ruby 	&& tar -xJf ruby.tar.xz -C /usr/src/ruby --strip-components=1 	&& rm ruby.tar.xz 		&& cd /usr/src/ruby 		&& { 		echo '#define ENABLE_PATH_CHECK 0'; 		echo; 		cat file.c; 	} > file.c.new 	&& mv file.c.new file.c 		&& autoconf&& ./configure --disable-install-doc --enable-shared 	&& make -j"$(nproc)" 	&& make install 		&& apt-get purge -y --auto-remove $buildDeps 	&& cd / 	&& rm -r /usr/src/ruby 		&& gem update --system "$RUBYGEMS_VERSION"
+ ---> Running in 6bd4760ba636
++ buildDeps=     autoconf 		bison 		gcc 		libbz2-dev 		libgdbm-dev 		libglib2.0-dev 		libncurses-dev 		libreadline-dev 		libxml2-dev 		libxslt-dev 		make 		ruby 		wget 		xz-utils
++ apt-get update
+Get:1 http://security.debian.org jessie/updates InRelease [63.1 kB]
+Ign http://packages.elasticsearch.org stable InRelease
+Ign http://deb.debian.org jessie InRelease
+Get:2 http://packages.elasticsearch.org stable Release.gpg [473 B]
+Get:3 http://deb.debian.org jessie-updates InRelease [145 kB]
+Get:4 http://packages.elasticsearch.org stable Release [3316 B]
+Get:5 http://security.debian.org jessie/updates/main amd64 Packages [507 kB]
+Get:6 http://packages.elasticsearch.org stable/main amd64 Packages [2283 B]
+Get:7 http://deb.debian.org jessie-backports InRelease [166 kB]
+Get:8 http://deb.debian.org jessie Release.gpg [2373 B]
+Get:9 http://deb.debian.org jessie-updates/main amd64 Packages [17.6 kB]
+Get:10 http://deb.debian.org jessie Release [148 kB]
+Get:11 http://deb.debian.org jessie-backports/main amd64 Packages [1141 kB]
+Get:12 http://deb.debian.org jessie/main amd64 Packages [9049 kB]
+Fetched 11.2 MB in 24s (454 kB/s)
+Reading package lists...
++ apt-get install -y --no-install-recommends autoconf bison gcc libbz2-dev libgdbm-dev libglib2.0-dev libncurses-dev libreadline-dev libxml2-dev libxslt-dev make ruby wget xz-utils
+Reading package lists...
+Building dependency tree...
+Reading state information...
+wget is already the newest version.
+xz-utils is already the newest version.
+The following extra packages will be installed:
+  binutils cpp cpp-4.9 gcc-4.9 libasan1 libatomic1 libbison-dev libc-dev-bin
+  libc6 libc6-dev libcilkrts5 libcloog-isl4 libelfg0 libgcc-4.9-dev libgdbm3
+  libglib2.0-0 libglib2.0-bin libglib2.0-data libgomp1 libisl10 libitm1
+  liblsan0 libmpc3 libmpfr4 libpcre3-dev libpcrecpp0 libpython-stdlib
+  libpython2.7-minimal libpython2.7-stdlib libquadmath0 libreadline6-dev
+  libruby2.1 libsigsegv2 libtinfo-dev libtsan0 libubsan0 libxml2 libxslt1.1
+  libyaml-0-2 linux-libc-dev m4 mime-support perl perl-modules pkg-config
+  python python-minimal python2.7 python2.7-minimal ruby2.1
+  rubygems-integration zlib1g-dev
+Suggested packages:
+  autoconf-archive gnu-standards autoconf-doc libtool gettext binutils-doc
+  bison-doc cpp-doc gcc-4.9-locales gcc-multilib manpages-dev flex gdb gcc-doc
+  gcc-4.9-multilib gcc-4.9-doc libgcc1-dbg libgomp1-dbg libitm1-dbg
+  libatomic1-dbg libasan1-dbg liblsan0-dbg libtsan0-dbg libubsan0-dbg
+  libcilkrts5-dbg libquadmath0-dbg glibc-doc libglib2.0-doc ncurses-doc
+  readline-doc make-doc perl-doc libterm-readline-gnu-perl
+  libterm-readline-perl-perl libb-lint-perl libcpanplus-dist-build-perl
+  libcpanplus-perl libfile-checktree-perl liblog-message-simple-perl
+  liblog-message-perl libobject-accessor-perl python-doc python-tk
+  python2.7-doc binfmt-support ri ruby-dev bundler
+Recommended packages:
+  automake automaken bzip2-doc shared-mime-info xdg-user-dirs xml-core file
+  rename libarchive-extract-perl libmodule-pluggable-perl libpod-latex-perl
+  libterm-ui-perl libtext-soundex-perl libcgi-pm-perl libmodule-build-perl
+  libpackage-constants-perl libjs-jquery
+The following NEW packages will be installed:
+  autoconf binutils bison cpp cpp-4.9 gcc gcc-4.9 libasan1 libatomic1
+  libbison-dev libbz2-dev libc-dev-bin libc6-dev libcilkrts5 libcloog-isl4
+  libelfg0 libgcc-4.9-dev libgdbm-dev libgdbm3 libglib2.0-0 libglib2.0-bin
+  libglib2.0-data libglib2.0-dev libgomp1 libisl10 libitm1 liblsan0 libmpc3
+  libmpfr4 libncurses5-dev libpcre3-dev libpcrecpp0 libpython-stdlib
+  libpython2.7-minimal libpython2.7-stdlib libquadmath0 libreadline-dev
+  libreadline6-dev libruby2.1 libsigsegv2 libtinfo-dev libtsan0 libubsan0
+  libxml2 libxml2-dev libxslt1-dev libxslt1.1 libyaml-0-2 linux-libc-dev m4
+  make mime-support perl perl-modules pkg-config python python-minimal
+  python2.7 python2.7-minimal ruby ruby2.1 rubygems-integration zlib1g-dev
+The following packages will be upgraded:
+  libc6
+1 upgraded, 63 newly installed, 0 to remove and 38 not upgraded.
+Need to get 53.3 MB of archives.
+After this operation, 197 MB of additional disk space will be used.
+Get:1 http://security.debian.org/ jessie/updates/main linux-libc-dev amd64 3.16.39-1+deb8u2 [1046 kB]
+Get:2 http://deb.debian.org/debian/ jessie/main libc6 amd64 2.19-18+deb8u7 [4665 kB]
+Get:3 http://deb.debian.org/debian/ jessie/main libgdbm3 amd64 1.8.3-13.1 [30.0 kB]
+Get:4 http://deb.debian.org/debian/ jessie/main libxml2 amd64 2.9.1+dfsg1-5+deb8u4 [802 kB]
+Get:5 http://deb.debian.org/debian/ jessie/main perl-modules all 5.20.2-3+deb8u6 [2547 kB]
+Get:6 http://deb.debian.org/debian/ jessie/main perl amd64 5.20.2-3+deb8u6 [2637 kB]
+Get:7 http://deb.debian.org/debian/ jessie/main libpython2.7-minimal amd64 2.7.9-2+deb8u1 [378 kB]
+Get:8 http://deb.debian.org/debian/ jessie/main python2.7-minimal amd64 2.7.9-2+deb8u1 [1401 kB]
+Get:9 http://deb.debian.org/debian/ jessie/main python-minimal amd64 2.7.9-1 [40.3 kB]
+Get:10 http://deb.debian.org/debian/ jessie/main mime-support all 3.58 [36.0 kB]
+Get:11 http://deb.debian.org/debian/ jessie/main libpython2.7-stdlib amd64 2.7.9-2+deb8u1 [1847 kB]
+Get:12 http://deb.debian.org/debian/ jessie/main python2.7 amd64 2.7.9-2+deb8u1 [252 kB]
+Get:13 http://deb.debian.org/debian/ jessie/main libpython-stdlib amd64 2.7.9-1 [19.5 kB]
+Get:14 http://deb.debian.org/debian/ jessie/main python amd64 2.7.9-1 [151 kB]
+Get:15 http://deb.debian.org/debian/ jessie/main libasan1 amd64 4.9.2-10 [195 kB]
+Get:16 http://deb.debian.org/debian/ jessie/main libatomic1 amd64 4.9.2-10 [8992 B]
+Get:17 http://deb.debian.org/debian/ jessie/main libcilkrts5 amd64 4.9.2-10 [40.1 kB]
+Get:18 http://deb.debian.org/debian/ jessie/main libisl10 amd64 0.12.2-2 [440 kB]
+Get:19 http://deb.debian.org/debian/ jessie/main libcloog-isl4 amd64 0.18.2-1+b2 [61.8 kB]
+Get:20 http://deb.debian.org/debian/ jessie/main libelfg0 amd64 0.8.13-5 [51.6 kB]
+Get:21 http://deb.debian.org/debian/ jessie/main libglib2.0-0 amd64 2.42.1-1+b1 [2401 kB]
+Get:22 http://deb.debian.org/debian/ jessie/main libgomp1 amd64 4.9.2-10 [37.8 kB]
+Get:23 http://deb.debian.org/debian/ jessie/main libitm1 amd64 4.9.2-10 [29.2 kB]
+Get:24 http://deb.debian.org/debian/ jessie/main liblsan0 amd64 4.9.2-10 [92.8 kB]
+Get:25 http://deb.debian.org/debian/ jessie/main libmpfr4 amd64 3.1.2-2 [527 kB]
+Get:26 http://deb.debian.org/debian/ jessie/main libpcrecpp0 amd64 2:8.35-3.3+deb8u4 [142 kB]
+Get:27 http://deb.debian.org/debian/ jessie/main libquadmath0 amd64 4.9.2-10 [129 kB]
+Get:28 http://deb.debian.org/debian/ jessie/main libsigsegv2 amd64 2.10-4+b1 [29.2 kB]
+Get:29 http://deb.debian.org/debian/ jessie/main libtsan0 amd64 4.9.2-10 [212 kB]
+Get:30 http://deb.debian.org/debian/ jessie/main libubsan0 amd64 4.9.2-10 [82.4 kB]
+Get:31 http://deb.debian.org/debian/ jessie/main libxslt1.1 amd64 1.1.28-2+deb8u2 [232 kB]
+Get:32 http://deb.debian.org/debian/ jessie/main libyaml-0-2 amd64 0.1.6-3 [50.4 kB]
+Get:33 http://deb.debian.org/debian/ jessie/main libmpc3 amd64 1.0.2-1 [39.3 kB]
+Get:34 http://deb.debian.org/debian/ jessie/main m4 amd64 1.4.17-4 [254 kB]
+Get:35 http://deb.debian.org/debian/ jessie/main autoconf all 2.69-8 [340 kB]
+Get:36 http://deb.debian.org/debian/ jessie/main binutils amd64 2.25-5 [3516 kB]
+Get:37 http://deb.debian.org/debian/ jessie/main libbison-dev amd64 2:3.0.2.dfsg-2 [426 kB]
+Get:38 http://deb.debian.org/debian/ jessie/main bison amd64 2:3.0.2.dfsg-2 [765 kB]
+Get:39 http://deb.debian.org/debian/ jessie/main cpp-4.9 amd64 4.9.2-10 [5169 kB]
+Get:40 http://deb.debian.org/debian/ jessie/main cpp amd64 4:4.9.2-2 [17.3 kB]
+Get:41 http://deb.debian.org/debian/ jessie/main libgcc-4.9-dev amd64 4.9.2-10 [2066 kB]
+Get:42 http://deb.debian.org/debian/ jessie/main gcc-4.9 amd64 4.9.2-10 [5352 kB]
+Get:43 http://deb.debian.org/debian/ jessie/main gcc amd64 4:4.9.2-2 [5136 B]
+Get:44 http://deb.debian.org/debian/ jessie/main libc-dev-bin amd64 2.19-18+deb8u7 [238 kB]
+Get:45 http://deb.debian.org/debian/ jessie/main libc6-dev amd64 2.19-18+deb8u7 [2002 kB]
+Get:46 http://deb.debian.org/debian/ jessie/main libbz2-dev amd64 1.0.6-7+b3 [29.0 kB]
+Get:47 http://deb.debian.org/debian/ jessie/main libgdbm-dev amd64 1.8.3-13.1 [48.8 kB]
+Get:48 http://deb.debian.org/debian/ jessie/main libglib2.0-data all 2.42.1-1 [2173 kB]
+Get:49 http://deb.debian.org/debian/ jessie/main libglib2.0-bin amd64 2.42.1-1+b1 [1336 kB]
+Get:50 http://deb.debian.org/debian/ jessie/main libpcre3-dev amd64 2:8.35-3.3+deb8u4 [441 kB]
+Get:51 http://deb.debian.org/debian/ jessie/main pkg-config amd64 0.28-1 [57.5 kB]
+Get:52 http://deb.debian.org/debian/ jessie/main zlib1g-dev amd64 1:1.2.8.dfsg-2+b1 [206 kB]
+Get:53 http://deb.debian.org/debian/ jessie/main libglib2.0-dev amd64 2.42.1-1+b1 [2644 kB]
+Get:54 http://deb.debian.org/debian/ jessie/main libtinfo-dev amd64 5.9+20140913-1+b1 [77.1 kB]
+Get:55 http://deb.debian.org/debian/ jessie/main libncurses5-dev amd64 5.9+20140913-1+b1 [175 kB]
+Get:56 http://deb.debian.org/debian/ jessie/main libreadline6-dev amd64 6.3-8+b3 [124 kB]
+Get:57 http://deb.debian.org/debian/ jessie/main libreadline-dev amd64 6.3-8+b3 [1002 B]
+Get:58 http://deb.debian.org/debian/ jessie/main libxml2-dev amd64 2.9.1+dfsg1-5+deb8u4 [695 kB]
+Get:59 http://deb.debian.org/debian/ jessie/main libxslt1-dev amd64 1.1.28-2+deb8u2 [511 kB]
+Get:60 http://deb.debian.org/debian/ jessie/main make amd64 4.0-8.1 [349 kB]
+Get:61 http://deb.debian.org/debian/ jessie/main rubygems-integration all 1.8 [4514 B]
+Get:62 http://deb.debian.org/debian/ jessie/main libruby2.1 amd64 2.1.5-2+deb8u3 [3290 kB]
+Get:63 http://deb.debian.org/debian/ jessie/main ruby2.1 amd64 2.1.5-2+deb8u3 [276 kB]
+Get:64 http://deb.debian.org/debian/ jessie/main ruby all 1:2.1.5+deb8u2 [9688 B]
+debconf: delaying package configuration, since apt-utils is not installed
+Fetched 53.3 MB in 1min 46s (502 kB/s)
+(Reading database ... 9246 files and directories currently installed.)
+Preparing to unpack .../libc6_2.19-18+deb8u7_amd64.deb ...
+debconf: unable to initialize frontend: Dialog
+debconf: (TERM is not set, so the dialog frontend is not usable.)
+debconf: falling back to frontend: Readline
+debconf: unable to initialize frontend: Readline
+debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC contains: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.20.2 /usr/local/share/perl/5.20.2 /usr/lib/x86_64-linux-gnu/perl5/5.20 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl/5.20 /usr/share/perl/5.20 /usr/local/lib/site_perl .) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 7.)
+debconf: falling back to frontend: Teletype
+Unpacking libc6:amd64 (2.19-18+deb8u7) over (2.19-18+deb8u6) ...
+Setting up libc6:amd64 (2.19-18+deb8u7) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (TERM is not set, so the dialog frontend is not usable.)
+debconf: falling back to frontend: Readline
+debconf: unable to initialize frontend: Readline
+debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC contains: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.20.2 /usr/local/share/perl/5.20.2 /usr/lib/x86_64-linux-gnu/perl5/5.20 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl/5.20 /usr/share/perl/5.20 /usr/local/lib/site_perl .) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 7.)
+debconf: falling back to frontend: Teletype
+Processing triggers for libc-bin (2.19-18+deb8u6) ...
+Selecting previously unselected package libgdbm3:amd64.
+(Reading database ... 9246 files and directories currently installed.)
+Preparing to unpack .../libgdbm3_1.8.3-13.1_amd64.deb ...
+Unpacking libgdbm3:amd64 (1.8.3-13.1) ...
+Selecting previously unselected package libxml2:amd64.
+Preparing to unpack .../libxml2_2.9.1+dfsg1-5+deb8u4_amd64.deb ...
+Unpacking libxml2:amd64 (2.9.1+dfsg1-5+deb8u4) ...
+Selecting previously unselected package perl-modules.
+Preparing to unpack .../perl-modules_5.20.2-3+deb8u6_all.deb ...
+Unpacking perl-modules (5.20.2-3+deb8u6) ...
+Selecting previously unselected package perl.
+Preparing to unpack .../perl_5.20.2-3+deb8u6_amd64.deb ...
+Unpacking perl (5.20.2-3+deb8u6) ...
+Selecting previously unselected package libpython2.7-minimal:amd64.
+Preparing to unpack .../libpython2.7-minimal_2.7.9-2+deb8u1_amd64.deb ...
+Unpacking libpython2.7-minimal:amd64 (2.7.9-2+deb8u1) ...
+Selecting previously unselected package python2.7-minimal.
+Preparing to unpack .../python2.7-minimal_2.7.9-2+deb8u1_amd64.deb ...
+Unpacking python2.7-minimal (2.7.9-2+deb8u1) ...
+Selecting previously unselected package python-minimal.
+Preparing to unpack .../python-minimal_2.7.9-1_amd64.deb ...
+Unpacking python-minimal (2.7.9-1) ...
+Selecting previously unselected package mime-support.
+Preparing to unpack .../mime-support_3.58_all.deb ...
+Unpacking mime-support (3.58) ...
+Selecting previously unselected package libpython2.7-stdlib:amd64.
+Preparing to unpack .../libpython2.7-stdlib_2.7.9-2+deb8u1_amd64.deb ...
+Unpacking libpython2.7-stdlib:amd64 (2.7.9-2+deb8u1) ...
+Selecting previously unselected package python2.7.
+Preparing to unpack .../python2.7_2.7.9-2+deb8u1_amd64.deb ...
+Unpacking python2.7 (2.7.9-2+deb8u1) ...
+Selecting previously unselected package libpython-stdlib:amd64.
+Preparing to unpack .../libpython-stdlib_2.7.9-1_amd64.deb ...
+Unpacking libpython-stdlib:amd64 (2.7.9-1) ...
+Setting up libpython2.7-minimal:amd64 (2.7.9-2+deb8u1) ...
+Setting up python2.7-minimal (2.7.9-2+deb8u1) ...
+Linking and byte-compiling packages for runtime python2.7...
+Setting up python-minimal (2.7.9-1) ...
+Selecting previously unselected package python.
+(Reading database ... 11236 files and directories currently installed.)
+Preparing to unpack .../python_2.7.9-1_amd64.deb ...
+Unpacking python (2.7.9-1) ...
+Selecting previously unselected package libasan1:amd64.
+Preparing to unpack .../libasan1_4.9.2-10_amd64.deb ...
+Unpacking libasan1:amd64 (4.9.2-10) ...
+Selecting previously unselected package libatomic1:amd64.
+Preparing to unpack .../libatomic1_4.9.2-10_amd64.deb ...
+Unpacking libatomic1:amd64 (4.9.2-10) ...
+Selecting previously unselected package libcilkrts5:amd64.
+Preparing to unpack .../libcilkrts5_4.9.2-10_amd64.deb ...
+Unpacking libcilkrts5:amd64 (4.9.2-10) ...
+Selecting previously unselected package libisl10:amd64.
+Preparing to unpack .../libisl10_0.12.2-2_amd64.deb ...
+Unpacking libisl10:amd64 (0.12.2-2) ...
+Selecting previously unselected package libcloog-isl4:amd64.
+Preparing to unpack .../libcloog-isl4_0.18.2-1+b2_amd64.deb ...
+Unpacking libcloog-isl4:amd64 (0.18.2-1+b2) ...
+Selecting previously unselected package libelfg0:amd64.
+Preparing to unpack .../libelfg0_0.8.13-5_amd64.deb ...
+Unpacking libelfg0:amd64 (0.8.13-5) ...
+Selecting previously unselected package libglib2.0-0:amd64.
+Preparing to unpack .../libglib2.0-0_2.42.1-1+b1_amd64.deb ...
+Unpacking libglib2.0-0:amd64 (2.42.1-1+b1) ...
+Selecting previously unselected package libgomp1:amd64.
+Preparing to unpack .../libgomp1_4.9.2-10_amd64.deb ...
+Unpacking libgomp1:amd64 (4.9.2-10) ...
+Selecting previously unselected package libitm1:amd64.
+Preparing to unpack .../libitm1_4.9.2-10_amd64.deb ...
+Unpacking libitm1:amd64 (4.9.2-10) ...
+Selecting previously unselected package liblsan0:amd64.
+Preparing to unpack .../liblsan0_4.9.2-10_amd64.deb ...
+Unpacking liblsan0:amd64 (4.9.2-10) ...
+Selecting previously unselected package libmpfr4:amd64.
+Preparing to unpack .../libmpfr4_3.1.2-2_amd64.deb ...
+Unpacking libmpfr4:amd64 (3.1.2-2) ...
+Selecting previously unselected package libpcrecpp0:amd64.
+Preparing to unpack .../libpcrecpp0_2%3a8.35-3.3+deb8u4_amd64.deb ...
+Unpacking libpcrecpp0:amd64 (2:8.35-3.3+deb8u4) ...
+Selecting previously unselected package libquadmath0:amd64.
+Preparing to unpack .../libquadmath0_4.9.2-10_amd64.deb ...
+Unpacking libquadmath0:amd64 (4.9.2-10) ...
+Selecting previously unselected package libsigsegv2:amd64.
+Preparing to unpack .../libsigsegv2_2.10-4+b1_amd64.deb ...
+Unpacking libsigsegv2:amd64 (2.10-4+b1) ...
+Selecting previously unselected package libtsan0:amd64.
+Preparing to unpack .../libtsan0_4.9.2-10_amd64.deb ...
+Unpacking libtsan0:amd64 (4.9.2-10) ...
+Selecting previously unselected package libubsan0:amd64.
+Preparing to unpack .../libubsan0_4.9.2-10_amd64.deb ...
+Unpacking libubsan0:amd64 (4.9.2-10) ...
+Selecting previously unselected package libxslt1.1:amd64.
+Preparing to unpack .../libxslt1.1_1.1.28-2+deb8u2_amd64.deb ...
+Unpacking libxslt1.1:amd64 (1.1.28-2+deb8u2) ...
+Selecting previously unselected package libyaml-0-2:amd64.
+Preparing to unpack .../libyaml-0-2_0.1.6-3_amd64.deb ...
+Unpacking libyaml-0-2:amd64 (0.1.6-3) ...
+Selecting previously unselected package libmpc3:amd64.
+Preparing to unpack .../libmpc3_1.0.2-1_amd64.deb ...
+Unpacking libmpc3:amd64 (1.0.2-1) ...
+Selecting previously unselected package m4.
+Preparing to unpack .../archives/m4_1.4.17-4_amd64.deb ...
+Unpacking m4 (1.4.17-4) ...
+Selecting previously unselected package autoconf.
+Preparing to unpack .../autoconf_2.69-8_all.deb ...
+Unpacking autoconf (2.69-8) ...
+Selecting previously unselected package binutils.
+Preparing to unpack .../binutils_2.25-5_amd64.deb ...
+Unpacking binutils (2.25-5) ...
+Selecting previously unselected package libbison-dev:amd64.
+Preparing to unpack .../libbison-dev_2%3a3.0.2.dfsg-2_amd64.deb ...
+Unpacking libbison-dev:amd64 (2:3.0.2.dfsg-2) ...
+Selecting previously unselected package bison.
+Preparing to unpack .../bison_2%3a3.0.2.dfsg-2_amd64.deb ...
+Unpacking bison (2:3.0.2.dfsg-2) ...
+Selecting previously unselected package cpp-4.9.
+Preparing to unpack .../cpp-4.9_4.9.2-10_amd64.deb ...
+Unpacking cpp-4.9 (4.9.2-10) ...
+Selecting previously unselected package cpp.
+Preparing to unpack .../cpp_4%3a4.9.2-2_amd64.deb ...
+Unpacking cpp (4:4.9.2-2) ...
+Selecting previously unselected package libgcc-4.9-dev:amd64.
+Preparing to unpack .../libgcc-4.9-dev_4.9.2-10_amd64.deb ...
+Unpacking libgcc-4.9-dev:amd64 (4.9.2-10) ...
+Selecting previously unselected package gcc-4.9.
+Preparing to unpack .../gcc-4.9_4.9.2-10_amd64.deb ...
+Unpacking gcc-4.9 (4.9.2-10) ...
+Selecting previously unselected package gcc.
+Preparing to unpack .../gcc_4%3a4.9.2-2_amd64.deb ...
+Unpacking gcc (4:4.9.2-2) ...
+Selecting previously unselected package libc-dev-bin.
+Preparing to unpack .../libc-dev-bin_2.19-18+deb8u7_amd64.deb ...
+Unpacking libc-dev-bin (2.19-18+deb8u7) ...
+Selecting previously unselected package linux-libc-dev:amd64.
+Preparing to unpack .../linux-libc-dev_3.16.39-1+deb8u2_amd64.deb ...
+Unpacking linux-libc-dev:amd64 (3.16.39-1+deb8u2) ...
+Selecting previously unselected package libc6-dev:amd64.
+Preparing to unpack .../libc6-dev_2.19-18+deb8u7_amd64.deb ...
+Unpacking libc6-dev:amd64 (2.19-18+deb8u7) ...
+Selecting previously unselected package libbz2-dev:amd64.
+Preparing to unpack .../libbz2-dev_1.0.6-7+b3_amd64.deb ...
+Unpacking libbz2-dev:amd64 (1.0.6-7+b3) ...
+Selecting previously unselected package libgdbm-dev.
+Preparing to unpack .../libgdbm-dev_1.8.3-13.1_amd64.deb ...
+Unpacking libgdbm-dev (1.8.3-13.1) ...
+Selecting previously unselected package libglib2.0-data.
+Preparing to unpack .../libglib2.0-data_2.42.1-1_all.deb ...
+Unpacking libglib2.0-data (2.42.1-1) ...
+Selecting previously unselected package libglib2.0-bin.
+Preparing to unpack .../libglib2.0-bin_2.42.1-1+b1_amd64.deb ...
+Unpacking libglib2.0-bin (2.42.1-1+b1) ...
+Selecting previously unselected package libpcre3-dev:amd64.
+Preparing to unpack .../libpcre3-dev_2%3a8.35-3.3+deb8u4_amd64.deb ...
+Unpacking libpcre3-dev:amd64 (2:8.35-3.3+deb8u4) ...
+Selecting previously unselected package pkg-config.
+Preparing to unpack .../pkg-config_0.28-1_amd64.deb ...
+Unpacking pkg-config (0.28-1) ...
+Selecting previously unselected package zlib1g-dev:amd64.
+Preparing to unpack .../zlib1g-dev_1%3a1.2.8.dfsg-2+b1_amd64.deb ...
+Unpacking zlib1g-dev:amd64 (1:1.2.8.dfsg-2+b1) ...
+Selecting previously unselected package libglib2.0-dev.
+Preparing to unpack .../libglib2.0-dev_2.42.1-1+b1_amd64.deb ...
+Unpacking libglib2.0-dev (2.42.1-1+b1) ...
+Selecting previously unselected package libtinfo-dev:amd64.
+Preparing to unpack .../libtinfo-dev_5.9+20140913-1+b1_amd64.deb ...
+Unpacking libtinfo-dev:amd64 (5.9+20140913-1+b1) ...
+Selecting previously unselected package libncurses5-dev:amd64.
+Preparing to unpack .../libncurses5-dev_5.9+20140913-1+b1_amd64.deb ...
+Unpacking libncurses5-dev:amd64 (5.9+20140913-1+b1) ...
+Selecting previously unselected package libreadline6-dev:amd64.
+Preparing to unpack .../libreadline6-dev_6.3-8+b3_amd64.deb ...
+Unpacking libreadline6-dev:amd64 (6.3-8+b3) ...
+Selecting previously unselected package libreadline-dev:amd64.
+Preparing to unpack .../libreadline-dev_6.3-8+b3_amd64.deb ...
+Unpacking libreadline-dev:amd64 (6.3-8+b3) ...
+Selecting previously unselected package libxml2-dev:amd64.
+Preparing to unpack .../libxml2-dev_2.9.1+dfsg1-5+deb8u4_amd64.deb ...
+Unpacking libxml2-dev:amd64 (2.9.1+dfsg1-5+deb8u4) ...
+Selecting previously unselected package libxslt1-dev:amd64.
+Preparing to unpack .../libxslt1-dev_1.1.28-2+deb8u2_amd64.deb ...
+Unpacking libxslt1-dev:amd64 (1.1.28-2+deb8u2) ...
+Selecting previously unselected package make.
+Preparing to unpack .../make_4.0-8.1_amd64.deb ...
+Unpacking make (4.0-8.1) ...
+Selecting previously unselected package rubygems-integration.
+Preparing to unpack .../rubygems-integration_1.8_all.deb ...
+Unpacking rubygems-integration (1.8) ...
+Selecting previously unselected package libruby2.1:amd64.
+Preparing to unpack .../libruby2.1_2.1.5-2+deb8u3_amd64.deb ...
+Unpacking libruby2.1:amd64 (2.1.5-2+deb8u3) ...
+Selecting previously unselected package ruby2.1.
+Preparing to unpack .../ruby2.1_2.1.5-2+deb8u3_amd64.deb ...
+Unpacking ruby2.1 (2.1.5-2+deb8u3) ...
+Selecting previously unselected package ruby.
+Preparing to unpack .../ruby_1%3a2.1.5+deb8u2_all.deb ...
+Unpacking ruby (1:2.1.5+deb8u2) ...
+Setting up libgdbm3:amd64 (1.8.3-13.1) ...
+Setting up libxml2:amd64 (2.9.1+dfsg1-5+deb8u4) ...
+Setting up perl-modules (5.20.2-3+deb8u6) ...
+Setting up perl (5.20.2-3+deb8u6) ...
+update-alternatives: using /usr/bin/prename to provide /usr/bin/rename (rename) in auto mode
+Setting up mime-support (3.58) ...
+Setting up libpython2.7-stdlib:amd64 (2.7.9-2+deb8u1) ...
+Setting up python2.7 (2.7.9-2+deb8u1) ...
+Setting up libpython-stdlib:amd64 (2.7.9-1) ...
+Setting up python (2.7.9-1) ...
+Setting up libasan1:amd64 (4.9.2-10) ...
+Setting up libatomic1:amd64 (4.9.2-10) ...
+Setting up libcilkrts5:amd64 (4.9.2-10) ...
+Setting up libisl10:amd64 (0.12.2-2) ...
+Setting up libcloog-isl4:amd64 (0.18.2-1+b2) ...
+Setting up libelfg0:amd64 (0.8.13-5) ...
+Setting up libglib2.0-0:amd64 (2.42.1-1+b1) ...
+No schema files found: doing nothing.
+Setting up libgomp1:amd64 (4.9.2-10) ...
+Setting up libitm1:amd64 (4.9.2-10) ...
+Setting up liblsan0:amd64 (4.9.2-10) ...
+Setting up libmpfr4:amd64 (3.1.2-2) ...
+Setting up libpcrecpp0:amd64 (2:8.35-3.3+deb8u4) ...
+Setting up libquadmath0:amd64 (4.9.2-10) ...
+Setting up libsigsegv2:amd64 (2.10-4+b1) ...
+Setting up libtsan0:amd64 (4.9.2-10) ...
+Setting up libubsan0:amd64 (4.9.2-10) ...
+Setting up libxslt1.1:amd64 (1.1.28-2+deb8u2) ...
+Setting up libyaml-0-2:amd64 (0.1.6-3) ...
+Setting up libmpc3:amd64 (1.0.2-1) ...
+Setting up m4 (1.4.17-4) ...
+Setting up autoconf (2.69-8) ...
+Setting up binutils (2.25-5) ...
+Setting up libbison-dev:amd64 (2:3.0.2.dfsg-2) ...
+Setting up bison (2:3.0.2.dfsg-2) ...
+update-alternatives: using /usr/bin/bison.yacc to provide /usr/bin/yacc (yacc) in auto mode
+Setting up cpp-4.9 (4.9.2-10) ...
+Setting up cpp (4:4.9.2-2) ...
+Setting up libgcc-4.9-dev:amd64 (4.9.2-10) ...
+Setting up gcc-4.9 (4.9.2-10) ...
+Setting up gcc (4:4.9.2-2) ...
+Setting up libc-dev-bin (2.19-18+deb8u7) ...
+Setting up linux-libc-dev:amd64 (3.16.39-1+deb8u2) ...
+Setting up libc6-dev:amd64 (2.19-18+deb8u7) ...
+Setting up libbz2-dev:amd64 (1.0.6-7+b3) ...
+Setting up libgdbm-dev (1.8.3-13.1) ...
+Setting up libglib2.0-data (2.42.1-1) ...
+Setting up libglib2.0-bin (2.42.1-1+b1) ...
+Setting up libpcre3-dev:amd64 (2:8.35-3.3+deb8u4) ...
+Setting up pkg-config (0.28-1) ...
+Setting up zlib1g-dev:amd64 (1:1.2.8.dfsg-2+b1) ...
+Setting up libglib2.0-dev (2.42.1-1+b1) ...
+Setting up libtinfo-dev:amd64 (5.9+20140913-1+b1) ...
+Setting up libncurses5-dev:amd64 (5.9+20140913-1+b1) ...
+Setting up libreadline6-dev:amd64 (6.3-8+b3) ...
+Setting up libreadline-dev:amd64 (6.3-8+b3) ...
+Setting up libxml2-dev:amd64 (2.9.1+dfsg1-5+deb8u4) ...
+Setting up libxslt1-dev:amd64 (1.1.28-2+deb8u2) ...
+Setting up make (4.0-8.1) ...
+Setting up rubygems-integration (1.8) ...
+Setting up libruby2.1:amd64 (2.1.5-2+deb8u3) ...
+Setting up ruby2.1 (2.1.5-2+deb8u3) ...
+Setting up ruby (1:2.1.5+deb8u2) ...
+Processing triggers for libc-bin (2.19-18+deb8u6) ...
++ rm -rf /var/lib/apt/lists/deb.debian.org_debian_dists_jessie-backports_InRelease /var/lib/apt/lists/deb.debian.org_debian_dists_jessie-backports_main_binary-amd64_Packages.gz /var/lib/apt/lists/deb.debian.org_debian_dists_jessie-updates_InRelease /var/lib/apt/lists/deb.debian.org_debian_dists_jessie-updates_main_binary-amd64_Packages.gz /var/lib/apt/lists/deb.debian.org_debian_dists_jessie_Release /var/lib/apt/lists/deb.debian.org_debian_dists_jessie_Release.gpg /var/lib/apt/lists/deb.debian.org_debian_dists_jessie_main_binary-amd64_Packages.gz /var/lib/apt/lists/lock /var/lib/apt/lists/packages.elasticsearch.org_elasticsearch_1.7_debian_dists_stable_Release /var/lib/apt/lists/packages.elasticsearch.org_elasticsearch_1.7_debian_dists_stable_Release.gpg /var/lib/apt/lists/packages.elasticsearch.org_elasticsearch_1.7_debian_dists_stable_main_binary-amd64_Packages.gz /var/lib/apt/lists/partial /var/lib/apt/lists/security.debian.org_dists_jessie_updates_InRelease /var/lib/apt/lists/security.debian.org_dists_jessie_updates_main_binary-amd64_Packages.gz
++ wget -O ruby.tar.xz https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.4.tar.xz
+--2017-04-21 15:31:11--  https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.4.tar.xz
+Resolving cache.ruby-lang.org (cache.ruby-lang.org)... 151.101.120.233
+Connecting to cache.ruby-lang.org (cache.ruby-lang.org)|151.101.120.233|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 11450108 (11M) [application/octet-stream]
+Saving to: ‘ruby.tar.xz’
+
+     0K .......... .......... .......... .......... ..........  0%  722K 15s
+    50K .......... .......... .......... .......... ..........  0% 1.49M 11s
+   100K .......... .......... .......... .......... ..........  1% 1.29M 10s
+   150K .......... .......... .......... .......... ..........  1% 1.26M 10s
+   200K .......... .......... .......... .......... ..........  2% 1.18M 10s
+   250K .......... .......... .......... .......... ..........  2%  996K 10s
+   300K .......... .......... .......... .......... ..........  3% 1.53M 9s
+   350K .......... .......... .......... .......... ..........  3% 1.39M 9s
+   400K .......... .......... .......... .......... ..........  4% 1.10M 9s
+   450K .......... .......... .......... .......... ..........  4% 1.43M 9s
+   500K .......... .......... .......... .......... ..........  4% 1.49M 9s
+   550K .......... .......... .......... .......... ..........  5% 1.54M 8s
+   600K .......... .......... .......... .......... ..........  5% 1.63M 8s
+   650K .......... .......... .......... .......... ..........  6% 1.56M 8s
+   700K .......... .......... .......... .......... ..........  6% 1.59M 8s
+   750K .......... .......... .......... .......... ..........  7% 1.56M 8s
+   800K .......... .......... .......... .......... ..........  7% 1.20M 8s
+   850K .......... .......... .......... .......... ..........  8% 1.48M 8s
+   900K .......... .......... .......... .......... ..........  8% 1.54M 8s
+   950K .......... .......... .......... .......... ..........  8% 1.57M 8s
+  1000K .......... .......... .......... .......... ..........  9% 1.59M 7s
+  1050K .......... .......... .......... .......... ..........  9% 1.50M 7s
+  1100K .......... .......... .......... .......... .......... 10% 1.40M 7s
+  1150K .......... .......... .......... .......... .......... 10% 1.55M 7s
+  1200K .......... .......... .......... .......... .......... 11% 1.19M 7s
+  1250K .......... .......... .......... .......... .......... 11% 1.56M 7s
+  1300K .......... .......... .......... .......... .......... 12% 1.56M 7s
+  1350K .......... .......... .......... .......... .......... 12% 1.38M 7s
+  1400K .......... .......... .......... .......... .......... 12% 1.38M 7s
+  1450K .......... .......... .......... .......... .......... 13% 1.56M 7s
+  1500K .......... .......... .......... .......... .......... 13% 1.64M 7s
+  1550K .......... .......... .......... .......... .......... 14% 1.59M 7s
+  1600K .......... .......... .......... .......... .......... 14% 1.08M 7s
+  1650K .......... .......... .......... .......... .......... 15% 1.64M 7s
+  1700K .......... .......... .......... .......... .......... 15% 1.52M 7s
+  1750K .......... .......... .......... .......... .......... 16% 1.59M 7s
+  1800K .......... .......... .......... .......... .......... 16% 1.59M 7s
+  1850K .......... .......... .......... .......... .......... 16% 1.55M 7s
+  1900K .......... .......... .......... .......... .......... 17% 1.58M 6s
+  1950K .......... .......... .......... .......... .......... 17% 1.56M 6s
+  2000K .......... .......... .......... .......... .......... 18% 1.16M 6s
+  2050K .......... .......... .......... .......... .......... 18% 1.61M 6s
+  2100K .......... .......... .......... .......... .......... 19% 1.41M 6s
+  2150K .......... .......... .......... .......... .......... 19% 1.62M 6s
+  2200K .......... .......... .......... .......... .......... 20% 1.67M 6s
+  2250K .......... .......... .......... .......... .......... 20% 1.49M 6s
+  2300K .......... .......... .......... .......... .......... 21% 1.61M 6s
+  2350K .......... .......... .......... .......... .......... 21% 1.49M 6s
+  2400K .......... .......... .......... .......... .......... 21% 1.20M 6s
+  2450K .......... .......... .......... .......... .......... 22% 1.57M 6s
+  2500K .......... .......... .......... .......... .......... 22% 1.56M 6s
+  2550K .......... .......... .......... .......... .......... 23% 1.60M 6s
+  2600K .......... .......... .......... .......... .......... 23% 1.56M 6s
+  2650K .......... .......... .......... .......... .......... 24% 1.51M 6s
+  2700K .......... .......... .......... .......... .......... 24% 1.58M 6s
+  2750K .......... .......... .......... .......... .......... 25% 1.61M 6s
+  2800K .......... .......... .......... .......... .......... 25% 1.18M 6s
+  2850K .......... .......... .......... .......... .......... 25% 1.54M 6s
+  2900K .......... .......... .......... .......... .......... 26% 1.54M 6s
+  2950K .......... .......... .......... .......... .......... 26% 1.58M 6s
+  3000K .......... .......... .......... .......... .......... 27% 1.56M 6s
+  3050K .......... .......... .......... .......... .......... 27% 1.56M 6s
+  3100K .......... .......... .......... .......... .......... 28% 1.61M 5s
+  3150K .......... .......... .......... .......... .......... 28% 1.53M 5s
+  3200K .......... .......... .......... .......... .......... 29% 1.19M 5s
+  3250K .......... .......... .......... .......... .......... 29% 1.58M 5s
+  3300K .......... .......... .......... .......... .......... 29% 1.55M 5s
+  3350K .......... .......... .......... .......... .......... 30% 1.60M 5s
+  3400K .......... .......... .......... .......... .......... 30% 1.55M 5s
+  3450K .......... .......... .......... .......... .......... 31% 1.58M 5s
+  3500K .......... .......... .......... .......... .......... 31% 1.52M 5s
+  3550K .......... .......... .......... .......... .......... 32% 1.54M 5s
+  3600K .......... .......... .......... .......... .......... 32% 1.14M 5s
+  3650K .......... .......... .......... .......... .......... 33% 1.63M 5s
+  3700K .......... .......... .......... .......... .......... 33% 1.55M 5s
+  3750K .......... .......... .......... .......... .......... 33% 1.55M 5s
+  3800K .......... .......... .......... .......... .......... 34% 1.54M 5s
+  3850K .......... .......... .......... .......... .......... 34% 1.66M 5s
+  3900K .......... .......... .......... .......... .......... 35% 1.48M 5s
+  3950K .......... .......... .......... .......... .......... 35% 1.56M 5s
+  4000K .......... .......... .......... .......... .......... 36% 1.20M 5s
+  4050K .......... .......... .......... .......... .......... 36% 1.56M 5s
+  4100K .......... .......... .......... .......... .......... 37% 1.63M 5s
+  4150K .......... .......... .......... .......... .......... 37% 1.55M 5s
+  4200K .......... .......... .......... .......... .......... 38% 1.54M 5s
+  4250K .......... .......... .......... .......... .......... 38% 1.59M 5s
+  4300K .......... .......... .......... .......... .......... 38% 1.61M 5s
+  4350K .......... .......... .......... .......... .......... 39% 1.52M 5s
+  4400K .......... .......... .......... .......... .......... 39% 1.21M 5s
+  4450K .......... .......... .......... .......... .......... 40% 1.57M 5s
+  4500K .......... .......... .......... .......... .......... 40% 1.57M 4s
+  4550K .......... .......... .......... .......... .......... 41% 1.56M 4s
+  4600K .......... .......... .......... .......... .......... 41% 1.56M 4s
+  4650K .......... .......... .......... .......... .......... 42% 1.57M 4s
+  4700K .......... .......... .......... .......... .......... 42% 1.35M 4s
+  4750K .......... .......... .......... .......... .......... 42% 1.54M 4s
+  4800K .......... .......... .......... .......... .......... 43% 1.17M 4s
+  4850K .......... .......... .......... .......... .......... 43% 1.61M 4s
+  4900K .......... .......... .......... .......... .......... 44% 1.56M 4s
+  4950K .......... .......... .......... .......... .......... 44% 1.55M 4s
+  5000K .......... .......... .......... .......... .......... 45% 1.56M 4s
+  5050K .......... .......... .......... .......... .......... 45% 1.59M 4s
+  5100K .......... .......... .......... .......... .......... 46% 1.55M 4s
+  5150K .......... .......... .......... .......... .......... 46% 1.56M 4s
+  5200K .......... .......... .......... .......... .......... 46% 1.21M 4s
+  5250K .......... .......... .......... .......... .......... 47% 1.56M 4s
+  5300K .......... .......... .......... .......... .......... 47% 1.56M 4s
+  5350K .......... .......... .......... .......... .......... 48% 1.55M 4s
+  5400K .......... .......... .......... .......... .......... 48% 1.60M 4s
+  5450K .......... .......... .......... .......... .......... 49% 1.59M 4s
+  5500K .......... .......... .......... .......... .......... 49% 1.53M 4s
+  5550K .......... .......... .......... .......... .......... 50% 1.60M 4s
+  5600K .......... .......... .......... .......... .......... 50% 1.19M 4s
+  5650K .......... .......... .......... .......... .......... 50% 1.52M 4s
+  5700K .......... .......... .......... .......... .......... 51% 1.61M 4s
+  5750K .......... .......... .......... .......... .......... 51% 1.61M 4s
+  5800K .......... .......... .......... .......... .......... 52% 1.61M 4s
+  5850K .......... .......... .......... .......... .......... 52% 1.55M 4s
+  5900K .......... .......... .......... .......... .......... 53% 1.55M 3s
+  5950K .......... .......... .......... .......... .......... 53% 1.57M 3s
+  6000K .......... .......... .......... .......... .......... 54% 1.21M 3s
+  6050K .......... .......... .......... .......... .......... 54% 1.53M 3s
+  6100K .......... .......... .......... .......... .......... 55% 1.59M 3s
+  6150K .......... .......... .......... .......... .......... 55% 1.59M 3s
+  6200K .......... .......... .......... .......... .......... 55% 1.54M 3s
+  6250K .......... .......... .......... .......... .......... 56% 1.63M 3s
+  6300K .......... .......... .......... .......... .......... 56% 1.49M 3s
+  6350K .......... .......... .......... .......... .......... 57% 1.64M 3s
+  6400K .......... .......... .......... .......... .......... 57% 1.17M 3s
+  6450K .......... .......... .......... .......... .......... 58% 1.61M 3s
+  6500K .......... .......... .......... .......... .......... 58% 1.54M 3s
+  6550K .......... .......... .......... .......... .......... 59% 1.63M 3s
+  6600K .......... .......... .......... .......... .......... 59% 1.51M 3s
+  6650K .......... .......... .......... .......... .......... 59% 1.60M 3s
+  6700K .......... .......... .......... .......... .......... 60% 1.60M 3s
+  6750K .......... .......... .......... .......... .......... 60% 1.62M 3s
+  6800K .......... .......... .......... .......... .......... 61% 1.19M 3s
+  6850K .......... .......... .......... .......... .......... 61% 1.52M 3s
+  6900K .......... .......... .......... .......... .......... 62% 1.62M 3s
+  6950K .......... .......... .......... .......... .......... 62% 1.54M 3s
+  7000K .......... .......... .......... .......... .......... 63% 1.59M 3s
+  7050K .......... .......... .......... .......... .......... 63% 1.52M 3s
+  7100K .......... .......... .......... .......... .......... 63% 1.65M 3s
+  7150K .......... .......... .......... .......... .......... 64% 1.55M 3s
+  7200K .......... .......... .......... .......... .......... 64% 1.16M 3s
+  7250K .......... .......... .......... .......... .......... 65% 1.61M 3s
+  7300K .......... .......... .......... .......... .......... 65% 1.60M 3s
+  7350K .......... .......... .......... .......... .......... 66% 1.57M 3s
+  7400K .......... .......... .......... .......... .......... 66% 1.54M 2s
+  7450K .......... .......... .......... .......... .......... 67% 1.60M 2s
+  7500K .......... .......... .......... .......... .......... 67% 1.55M 2s
+  7550K .......... .......... .......... .......... .......... 67% 1.63M 2s
+  7600K .......... .......... .......... .......... .......... 68% 1.19M 2s
+  7650K .......... .......... .......... .......... .......... 68% 1.59M 2s
+  7700K .......... .......... .......... .......... .......... 69% 1.57M 2s
+  7750K .......... .......... .......... .......... .......... 69% 1.55M 2s
+  7800K .......... .......... .......... .......... .......... 70% 1.58M 2s
+  7850K .......... .......... .......... .......... .......... 70% 1.54M 2s
+  7900K .......... .......... .......... .......... .......... 71% 1.62M 2s
+  7950K .......... .......... .......... .......... .......... 71% 1.54M 2s
+  8000K .......... .......... .......... .......... .......... 71% 1.18M 2s
+  8050K .......... .......... .......... .......... .......... 72% 1.55M 2s
+  8100K .......... .......... .......... .......... .......... 72% 1.61M 2s
+  8150K .......... .......... .......... .......... .......... 73% 1.59M 2s
+  8200K .......... .......... .......... .......... .......... 73% 1.56M 2s
+  8250K .......... .......... .......... .......... .......... 74% 1.58M 2s
+  8300K .......... .......... .......... .......... .......... 74% 1.54M 2s
+  8350K .......... .......... .......... .......... .......... 75% 1.59M 2s
+  8400K .......... .......... .......... .......... .......... 75% 1.20M 2s
+  8450K .......... .......... .......... .......... .......... 76% 1.59M 2s
+  8500K .......... .......... .......... .......... .......... 76% 1.59M 2s
+  8550K .......... .......... .......... .......... .......... 76% 1.54M 2s
+  8600K .......... .......... .......... .......... .......... 77% 1.63M 2s
+  8650K .......... .......... .......... .......... .......... 77% 1.57M 2s
+  8700K .......... .......... .......... .......... .......... 78% 1.57M 2s
+  8750K .......... .......... .......... .......... .......... 78% 1.53M 2s
+  8800K .......... .......... .......... .......... .......... 79% 1.21M 2s
+  8850K .......... .......... .......... .......... .......... 79% 1.54M 2s
+  8900K .......... .......... .......... .......... .......... 80% 1.60M 1s
+  8950K .......... .......... .......... .......... .......... 80% 1.55M 1s
+  9000K .......... .......... .......... .......... .......... 80% 1.60M 1s
+  9050K .......... .......... .......... .......... .......... 81% 1.60M 1s
+  9100K .......... .......... .......... .......... .......... 81% 1.53M 1s
+  9150K .......... .......... .......... .......... .......... 82%  156K 1s
+  9200K .......... .......... .......... .......... .......... 82% 3.72M 1s
+  9250K .......... .......... .......... .......... .......... 83% 28.7M 1s
+  9300K .......... .......... .......... .......... .......... 83% 29.7M 1s
+  9350K .......... .......... .......... .......... .......... 84%  719K 1s
+  9400K .......... .......... .......... .......... .......... 84% 2.83M 1s
+  9450K .......... .......... .......... .......... .......... 84% 19.6M 1s
+  9500K .......... .......... .......... .......... .......... 85% 31.4M 1s
+  9550K .......... .......... .......... .......... .......... 85% 23.1M 1s
+  9600K .......... .......... .......... .......... .......... 86% 29.0M 1s
+  9650K .......... .......... .......... .......... .......... 86% 19.4M 1s
+  9700K .......... .......... .......... .......... .......... 87% 25.4M 1s
+  9750K .......... .......... .......... .......... .......... 87% 25.0M 1s
+  9800K .......... .......... .......... .......... .......... 88% 2.31M 1s
+  9850K .......... .......... .......... .......... .......... 88% 1.57M 1s
+  9900K .......... .......... .......... .......... .......... 88% 1.60M 1s
+  9950K .......... .......... .......... .......... .......... 89% 1.56M 1s
+ 10000K .......... .......... .......... .......... .......... 89% 1.21M 1s
+ 10050K .......... .......... .......... .......... .......... 90% 1.58M 1s
+ 10100K .......... .......... .......... .......... .......... 90% 1.56M 1s
+ 10150K .......... .......... .......... .......... .......... 91% 1.55M 1s
+ 10200K .......... .......... .......... .......... .......... 91% 1.57M 1s
+ 10250K .......... .......... .......... .......... .......... 92% 1.63M 1s
+ 10300K .......... .......... .......... .......... .......... 92% 1.52M 1s
+ 10350K .......... .......... .......... .......... .......... 93% 1.57M 1s
+ 10400K .......... .......... .......... .......... .......... 93% 1.18M 0s
+ 10450K .......... .......... .......... .......... .......... 93% 1.60M 0s
+ 10500K .......... .......... .......... .......... .......... 94% 1.54M 0s
+ 10550K .......... .......... .......... .......... .......... 94% 1.60M 0s
+ 10600K .......... .......... .......... .......... .......... 95% 1.54M 0s
+ 10650K .......... .......... .......... .......... .......... 95% 1.58M 0s
+ 10700K .......... .......... .......... .......... .......... 96% 1.60M 0s
+ 10750K .......... .......... .......... .......... .......... 96% 1.60M 0s
+ 10800K .......... .......... .......... .......... .......... 97% 1.18M 0s
+ 10850K .......... .......... .......... .......... .......... 97% 1.57M 0s
+ 10900K .......... .......... .......... .......... .......... 97% 1.60M 0s
+ 10950K .......... .......... .......... .......... .......... 98% 1.56M 0s
+ 11000K .......... .......... .......... .......... .......... 98% 1.53M 0s
+ 11050K .......... .......... .......... .......... .......... 99% 1.59M 0s
+ 11100K .......... .......... .......... .......... .......... 99% 1.60M 0s
+ 11150K .......... .......... .......... .                    100%  493K=7.4s
+
+2017-04-21 15:31:19 (1.48 MB/s) - ‘ruby.tar.xz’ saved [11450108/11450108]
+
++ echo 341cd9032e9fd17c452ed8562a8d43f7e45bfe05e411d0d7d627751dd82c578c *ruby.tar.xz
++ sha256sum -c -
+ruby.tar.xz: OK
++ mkdir -p /usr/src/ruby
++ tar -xJf ruby.tar.xz -C /usr/src/ruby --strip-components=1
++ rm ruby.tar.xz
++ cd /usr/src/ruby
++ echo #define ENABLE_PATH_CHECK 0
++ echo
++ cat file.c
++ mv file.c.new file.c
++ autoconf
++ ./configure --disable-install-doc --enable-shared
+checking for ruby... /usr/bin/ruby
+config.guess already exists
+config.sub already exists
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking target system type... x86_64-pc-linux-gnu
+checking for gcc... gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables...
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to accept ISO C89... none needed
+checking for g++... no
+checking for c++... no
+checking for gpp... no
+checking for aCC... no
+checking for CC... no
+checking for cxx... no
+checking for cc++... no
+checking for cl.exe... no
+checking for FCC... no
+checking for KCC... no
+checking for RCC... no
+checking for xlC_r... no
+checking for xlC... no
+checking whether we are using the GNU C++ compiler... no
+checking whether g++ accepts -g... no
+checking how to run the C preprocessor... gcc -E
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking whether gcc needs -traditional... no
+checking for ld... ld
+checking whether the linker is GNU ld... yes
+checking whether gcc -E accepts -o... yes
+checking for ranlib... ranlib
+checking for ar... ar
+checking for as... as
+checking for objdump... objdump
+checking for objcopy... objcopy
+checking for nm... nm
+checking whether ln -s works... yes
+checking whether make sets $(MAKE)... yes
+checking for a BSD-compatible install... /usr/bin/install -c
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for dtrace... no
+checking for dot... no
+checking for doxygen... no
+checking for pkg-config... pkg-config
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking minix/config.h usability... no
+checking minix/config.h presence... no
+checking for minix/config.h... no
+checking whether it is safe to define __EXTENSIONS__... yes
+checking for cd using physical directory... cd -P
+checking whether CFLAGS is valid... yes
+checking whether LDFLAGS is valid... yes
+checking whether -Wno-unused-parameter is accepted as CFLAGS... yes
+checking whether -Wno-parentheses is accepted as CFLAGS... yes
+checking whether -Wno-long-long is accepted as CFLAGS... yes
+checking whether -diag-disable=2259 is accepted as CFLAGS... no
+checking whether -Wno-missing-field-initializers is accepted as CFLAGS... yes
+checking whether -Wunused-variable is accepted as CFLAGS... yes
+checking whether -Wpointer-arith is accepted as CFLAGS... yes
+checking whether -Wwrite-strings is accepted as CFLAGS... yes
+checking whether -Wdeclaration-after-statement is accepted as CFLAGS... yes
+checking whether -Wshorten-64-to-32 is accepted as CFLAGS... no
+checking whether -Wimplicit-function-declaration is accepted as CFLAGS... yes
+checking whether -Wdivision-by-zero is accepted as CFLAGS... no
+checking whether -Wdeprecated-declarations is accepted as CFLAGS... yes
+checking whether -Wno-packed-bitfield-compat is accepted as CFLAGS... yes
+checking whether -Wextra-tokens is accepted as CFLAGS... no
+checking whether -Wall -Wextra is accepted as CFLAGS... yes
+checking whether -Qunused-arguments is accepted as CFLAGS... no
+checking whether INFINITY is available without C99 option... yes
+checking whether NAN is available without C99 option... yes
+checking whether -D_FORTIFY_SOURCE=2 is accepted as CFLAGS... yes
+checking whether -fstack-protector is accepted as CFLAGS... yes
+checking whether -fstack-protector is accepted as LDFLAGS... yes
+checking whether -std=iso9899:1999 is accepted as CFLAGS... yes
+checking whether -fno-strict-overflow is accepted as CFLAGS... yes
+checking whether -ggdb3 is accepted as CFLAGS... yes
+checking whether -fvisibility=hidden is accepted as CFLAGS... yes
+checking whether -fno-fast-math is accepted as CFLAGS... yes
+checking whether -fp-model precise is accepted as CFLAGS... no
+checking for crypt in -lcrypt... yes
+checking for dlopen in -ldl... yes
+checking for shl_load in -ldld... no
+checking for shutdown in -lsocket... no
+checking for dirent.h that defines DIR... yes
+checking for library containing opendir... none required
+checking for stdbool.h that conforms to C99... yes
+checking for _Bool... yes
+checking for sys/wait.h that is POSIX.1 compatible... yes
+checking a.out.h usability... yes
+checking a.out.h presence... yes
+checking for a.out.h... yes
+checking atomic.h usability... no
+checking atomic.h presence... no
+checking for atomic.h... no
+checking direct.h usability... no
+checking direct.h presence... no
+checking for direct.h... no
+checking grp.h usability... yes
+checking grp.h presence... yes
+checking for grp.h... yes
+checking fcntl.h usability... yes
+checking fcntl.h presence... yes
+checking for fcntl.h... yes
+checking float.h usability... yes
+checking float.h presence... yes
+checking for float.h... yes
+checking ieeefp.h usability... no
+checking ieeefp.h presence... no
+checking for ieeefp.h... no
+checking intrinsics.h usability... no
+checking intrinsics.h presence... no
+checking for intrinsics.h... no
+checking langinfo.h usability... yes
+checking langinfo.h presence... yes
+checking for langinfo.h... yes
+checking limits.h usability... yes
+checking limits.h presence... yes
+checking for limits.h... yes
+checking locale.h usability... yes
+checking locale.h presence... yes
+checking for locale.h... yes
+checking malloc.h usability... yes
+checking malloc.h presence... yes
+checking for malloc.h... yes
+checking malloc/malloc.h usability... no
+checking malloc/malloc.h presence... no
+checking for malloc/malloc.h... no
+checking malloc_np.h usability... no
+checking malloc_np.h presence... no
+checking for malloc_np.h... no
+checking net/socket.h usability... no
+checking net/socket.h presence... no
+checking for net/socket.h... no
+checking process.h usability... no
+checking process.h presence... no
+checking for process.h... no
+checking pwd.h usability... yes
+checking pwd.h presence... yes
+checking for pwd.h... yes
+checking setjmpex.h usability... no
+checking setjmpex.h presence... no
+checking for setjmpex.h... no
+checking sys/attr.h usability... no
+checking sys/attr.h presence... no
+checking for sys/attr.h... no
+checking sys/fcntl.h usability... yes
+checking sys/fcntl.h presence... yes
+checking for sys/fcntl.h... yes
+checking sys/file.h usability... yes
+checking sys/file.h presence... yes
+checking for sys/file.h... yes
+checking sys/id.h usability... no
+checking sys/id.h presence... no
+checking for sys/id.h... no
+checking sys/ioctl.h usability... yes
+checking sys/ioctl.h presence... yes
+checking for sys/ioctl.h... yes
+checking sys/mkdev.h usability... no
+checking sys/mkdev.h presence... no
+checking for sys/mkdev.h... no
+checking sys/param.h usability... yes
+checking sys/param.h presence... yes
+checking for sys/param.h... yes
+checking sys/prctl.h usability... yes
+checking sys/prctl.h presence... yes
+checking for sys/prctl.h... yes
+checking sys/resource.h usability... yes
+checking sys/resource.h presence... yes
+checking for sys/resource.h... yes
+checking sys/select.h usability... yes
+checking sys/select.h presence... yes
+checking for sys/select.h... yes
+checking sys/sendfile.h usability... yes
+checking sys/sendfile.h presence... yes
+checking for sys/sendfile.h... yes
+checking sys/socket.h usability... yes
+checking sys/socket.h presence... yes
+checking for sys/socket.h... yes
+checking sys/syscall.h usability... yes
+checking sys/syscall.h presence... yes
+checking for sys/syscall.h... yes
+checking sys/time.h usability... yes
+checking sys/time.h presence... yes
+checking for sys/time.h... yes
+checking sys/times.h usability... yes
+checking sys/times.h presence... yes
+checking for sys/times.h... yes
+checking sys/uio.h usability... yes
+checking sys/uio.h presence... yes
+checking for sys/uio.h... yes
+checking sys/utime.h usability... no
+checking sys/utime.h presence... no
+checking for sys/utime.h... no
+checking syscall.h usability... yes
+checking syscall.h presence... yes
+checking for syscall.h... yes
+checking time.h usability... yes
+checking time.h presence... yes
+checking for time.h... yes
+checking ucontext.h usability... yes
+checking ucontext.h presence... yes
+checking for ucontext.h... yes
+checking utime.h usability... yes
+checking utime.h presence... yes
+checking for utime.h... yes
+checking gmp.h usability... no
+checking gmp.h presence... no
+checking for gmp.h... no
+checking for special C compiler options needed for large files... no
+checking for _FILE_OFFSET_BITS value needed for large files... no
+checking whether byte ordering is bigendian... no
+checking for an ANSI C-conforming const... yes
+checking whether char is unsigned... no
+checking for inline... inline
+checking for working volatile... yes
+checking for typeof syntax and keyword spelling... __typeof__
+checking for long long... yes
+checking for off_t... yes
+checking char bit... 8
+checking size of int... 4
+checking size of short... 2
+checking size of long... 8
+checking size of long long... 8
+checking size of __int64... 0
+checking size of off_t... 8
+checking size of void*... 8
+checking size of float... 4
+checking size of double... 8
+checking size of time_t... 8
+checking size of clock_t... 8
+checking packed struct attribute... x __attribute__((packed))
+checking for printf prefix for long long... ll
+checking for pid_t... yes
+checking for convertible type of pid_t... INT
+checking for uid_t... yes
+checking for convertible type of uid_t... UINT
+checking for gid_t... yes
+checking for convertible type of gid_t... UINT
+checking for time_t... yes
+checking for convertible type of time_t... LONG
+checking for dev_t... yes
+checking for convertible type of dev_t... ULONG
+checking for mode_t... yes
+checking for convertible type of mode_t... UINT
+checking for rlim_t... yes
+checking for convertible type of rlim_t... ULONG
+checking for off_t... (cached) yes
+checking for convertible type of off_t... LONG
+checking for clockid_t... yes
+checking for convertible type of clockid_t... INT
+checking for prototypes... yes
+checking token paste string... ansi
+checking stringization... #expr
+checking string literal concatenation... yes
+checking for variable length prototypes and stdarg.h... yes
+checking for variable length macro... yes
+checking for NORETURN function attribute... __attribute__ ((noreturn)) x
+checking for DEPRECATED function attribute... __attribute__ ((deprecated)) x
+checking for DEPRECATED_BY function attribute... __attribute__ ((deprecated("by "#n))) x
+checking for DEPRECATED_TYPE type attribute... __attribute__ ((deprecated mesg)) x
+checking for NOINLINE function attribute... __attribute__ ((noinline)) x
+checking for WEAK function attribute... __attribute__ ((weak)) x
+checking for stdcall function attribute... x
+checking for cdecl function attribute... x
+checking for fastcall function attribute... x
+checking for FUNC_UNOPTIMIZED function attribute... __attribute__ ((optimize("O0"))) x
+checking for FUNC_MINIMIZED function attribute... __attribute__ ((optimize("-Os","-fomit-frame-pointer"))) x
+checking for function alias... alias
+checking for __atomic builtins... yes
+checking for __sync builtins... yes
+checking for __builtin_unreachable... yes
+checking for exported function attribute... __attribute__ ((visibility("default")))
+checking for function name string predefined identifier... __func__
+checking if enum over int is allowed... yes
+checking whether sys_nerr is declared... yes
+checking whether getenv is declared... yes
+checking for size_t... yes
+checking size of size_t... 8
+checking size of ptrdiff_t... 8
+checking for printf prefix for size_t... z
+checking for printf prefix for ptrdiff_t... t
+checking for struct stat.st_blksize... yes
+checking for struct stat.st_blocks... yes
+checking for struct stat.st_rdev... yes
+checking size of struct stat.st_size... SIZEOF_OFF_T
+checking size of struct stat.st_blocks... SIZEOF_OFF_T
+checking size of struct stat.st_ino... SIZEOF_LONG
+checking for struct stat.st_atim... yes
+checking for struct stat.st_atimespec... no
+checking for struct stat.st_atimensec... no
+checking for struct stat.st_mtim... yes
+checking for struct stat.st_mtimespec... no
+checking for struct stat.st_mtimensec... no
+checking for struct stat.st_ctim... yes
+checking for struct stat.st_ctimespec... no
+checking for struct stat.st_ctimensec... no
+checking for struct stat.st_birthtimespec... no
+checking for struct timeval... yes
+checking size of struct timeval.tv_sec... SIZEOF_TIME_T
+checking for struct timespec... yes
+checking for struct timezone... yes
+checking for clockid_t... (cached) yes
+checking for fd_mask... yes
+checking for int8_t... yes
+checking size of int8_t... 1
+checking for uint8_t... yes
+checking size of uint8_t... 1
+checking for int16_t... yes
+checking size of int16_t... 2
+checking for uint16_t... yes
+checking size of uint16_t... 2
+checking for int32_t... yes
+checking size of int32_t... 4
+checking for uint32_t... yes
+checking size of uint32_t... 4
+checking for int64_t... yes
+checking size of int64_t... 8
+checking for uint64_t... yes
+checking size of uint64_t... 8
+checking for intptr_t... yes
+checking size of intptr_t... 8
+checking for uintptr_t... yes
+checking size of uintptr_t... 8
+checking for ssize_t... yes
+checking size of ssize_t... 8
+checking for stack end address... __libc_stack_end
+checking for uid_t in sys/types.h... (cached) yes
+checking type of array argument to getgroups... gid_t
+checking return type of signal handlers... void
+checking for working alloca.h... yes
+checking for alloca... yes
+checking for dynamic size alloca... ok
+checking for working memcmp... yes
+checking for broken erfc of glibc-2.3.6 on IA64... no
+checking for acosh... yes
+checking for cbrt... yes
+checking for crypt... yes
+checking for dup2... yes
+checking for erf... yes
+checking for explicit_bzero... no
+checking for ffs... yes
+checking for finite... yes
+checking for flock... yes
+checking for hypot... yes
+checking for isinf... yes
+checking for isnan... yes
+checking for lgamma_r... yes
+checking for memmove... yes
+checking for nextafter... yes
+checking for setproctitle... no
+checking for strchr... yes
+checking for strerror... yes
+checking for strlcat... no
+checking for strlcpy... no
+checking for strstr... yes
+checking for tgamma... yes
+checking sys/pstat.h usability... no
+checking sys/pstat.h presence... no
+checking for sys/pstat.h... no
+checking for signbit... yes
+checking for broken memmem... no
+checking for pid_t... (cached) yes
+checking vfork.h usability... no
+checking vfork.h presence... no
+checking for vfork.h... no
+checking for fork... yes
+checking for vfork... yes
+checking for working fork... yes
+checking for working vfork... (cached) yes
+checking for __syscall... no
+checking for _longjmp... yes
+checking for _setjmp... yes
+checking for _setjmpex... no
+checking for atan2l... yes
+checking for atan2f... yes
+checking for chroot... yes
+checking for chsize... no
+checking for clock_gettime... yes
+checking for cosh... yes
+checking for daemon... (cached) no
+checking for dirfd... yes
+checking for dl_iterate_phdr... yes
+checking for dlopen... yes
+checking for dladdr... yes
+checking for dup... yes
+checking for dup3... yes
+checking for eaccess... yes
+checking for endgrent... yes
+checking for fchmod... yes
+checking for fchown... yes
+checking for fcntl... yes
+checking for fdatasync... yes
+checking for fgetattrlist... no
+checking for fmod... yes
+checking for fsync... yes
+checking for ftruncate... yes
+checking for ftruncate64... yes
+checking for getattrlist... no
+checking for getcwd... yes
+checking for getgidx... no
+checking for getgrnam... yes
+checking for getgrnam_r... yes
+checking for getgroups... yes
+checking for getpgid... yes
+checking for getpgrp... yes
+checking for getpriority... yes
+checking for getpwnam_r... yes
+checking for getresgid... yes
+checking for getresuid... yes
+checking for getrlimit... yes
+checking for getsid... yes
+checking for gettimeofday... yes
+checking for getuidx... no
+checking for gmtime_r... yes
+checking for initgroups... yes
+checking for ioctl... yes
+checking for isfinite... no
+checking for issetugid... no
+checking for killpg... yes
+checking for lchmod... no
+checking for lchown... yes
+checking for link... yes
+checking for llabs... yes
+checking for lockf... yes
+checking for log2... yes
+checking for lstat... yes
+checking for malloc_usable_size... yes
+checking for malloc_size... no
+checking for mblen... yes
+checking for memalign... yes
+checking for memset_s... no
+checking for writev... yes
+checking for memrchr... yes
+checking for memmem... yes
+checking for mkfifo... yes
+checking for mknod... yes
+checking for mktime... yes
+checking for pipe2... yes
+checking for poll... yes
+checking for posix_fadvise... yes
+checking for posix_memalign... yes
+checking for ppoll... yes
+checking for pread... yes
+checking for qsort_r... yes
+checking for readlink... yes
+checking for round... yes
+checking for sched_getaffinity... yes
+checking for seekdir... yes
+checking for select_large_fdset... no
+checking for sendfile... yes
+checking for setegid... yes
+checking for setenv... yes
+checking for seteuid... yes
+checking for setgid... yes
+checking for setgroups... yes
+checking for setpgid... yes
+checking for setpgrp... yes
+checking for setregid... yes
+checking for setresgid... yes
+checking for setresuid... yes
+checking for setreuid... yes
+checking for setrgid... no
+checking for setrlimit... yes
+checking for setruid... no
+checking for setsid... yes
+checking for setuid... yes
+checking for shutdown... yes
+checking for sigaction... yes
+checking for sigaltstack... yes
+checking for sigprocmask... yes
+checking for sinh... yes
+checking for spawnv... no
+checking for symlink... yes
+checking for syscall... yes
+checking for sysconf... yes
+checking for tanh... yes
+checking for telldir... yes
+checking for timegm... yes
+checking for times... yes
+checking for truncate... yes
+checking for truncate64... yes
+checking for unsetenv... yes
+checking for utimensat... yes
+checking for utimes... yes
+checking for wait4... yes
+checking for waitpid... yes
+checking if getcwd allocates buffer if NULL is given... yes
+checking for __builtin_bswap16... yes
+checking for __builtin_bswap32... yes
+checking for __builtin_bswap64... yes
+checking for __builtin_clz... yes
+checking for __builtin_clzl... yes
+checking for __builtin_clzll... yes
+checking for __builtin_choose_expr... yes
+checking for __builtin_choose_expr_constant_p... yes
+checking for __builtin_types_compatible_p... yes
+checking whether qsort_r is GNU version... yes
+checking whether qsort_r is BSD version... no
+checking whether atan2 handles Inf as C99... yes
+checking whether lgamma_r handles -0.0... yes
+checking for clock_getres... yes
+checking for unsetenv returns a value... yes
+checking for sigsetjmp as a macro or function... yes
+checking whether struct tm is in sys/time.h or time.h... time.h
+checking for struct tm.tm_zone... yes
+checking for struct tm.tm_gmtoff... yes
+checking for external int daylight... yes
+checking for external timezone... long
+checking for external altzone... no
+checking for timezone... yes
+checking whether timezone requires zero arguments... yes
+checking for negative time_t for gmtime(3)... yes
+checking for localtime(3) overflow correctly... yes
+checking whether right shift preserve sign bit... yes
+checking whether _SC_CLK_TCK is supported... yes
+checking stack growing direction on x86_64... -1
+checking for pthread_kill in -lthr... no
+checking for pthread_kill in -lpthread... yes
+checking for pthread_np.h... no
+checking whether pthread_t is scalar type... yes
+checking for sched_yield... yes
+checking for pthread_attr_setinheritsched... yes
+checking for pthread_attr_get_np... no
+checking for pthread_attr_getstack... yes
+checking for pthread_get_stackaddr_np... no
+checking for pthread_get_stacksize_np... no
+checking for thr_stksegment... no
+checking for pthread_stackseg_np... no
+checking for pthread_getthrds_np... no
+checking for pthread_cond_init... yes
+checking for pthread_condattr_setclock... yes
+checking for pthread_condattr_init... yes
+checking for pthread_sigmask... yes
+checking for pthread_setname_np... yes
+checking for pthread_set_name_np... no
+checking for pthread_getattr_np... yes
+checking for pthread_attr_init... yes
+checking arguments of pthread_setname_np... (pthread_self(), name)
+checking if mcontext_t is a pointer... no
+checking for getcontext... yes
+checking for setcontext... yes
+checking if fork works with pthread... yes
+checking whether ELF binaries are produced... yes
+checking elf.h usability... yes
+checking elf.h presence... yes
+checking for elf.h... yes
+checking elf_abi.h usability... no
+checking elf_abi.h presence... no
+checking for elf_abi.h... no
+checking whether OS depend dynamic link works... yes
+checking whether -Wl,-R. is accepted as LDFLAGS... yes
+checking for backtrace... yes
+checking for broken backtrace... no
+checking valgrind/memcheck.h usability... no
+checking valgrind/memcheck.h presence... no
+checking for valgrind/memcheck.h... no
+checking for strip... strip
+checking whether -Wl,--no-undefined is accepted as LDFLAGS... yes
+checking whether wrapper for LD_LIBRARY_PATH is needed... no
+checking for __builtin_setjmp... yes with cast ()
+checking for setjmp type... __builtin_setjmp
+checking for prefix of external symbols... NONE
+checking pthread.h usability... yes
+checking pthread.h presence... yes
+checking for pthread.h... yes
+checking if make is GNU make... yes
+checking for nroff... no
+checking for awf... no
+.ext/include/x86_64-linux/ruby/config.h updated
+configure: ruby library version = 2.3.0
+configure: creating ./config.status
+config.status: creating GNUmakefile
+config.status: creating Makefile
+config.status: creating ruby-2.3.pc
++ nproc
++ make -j2
+	CC = gcc
+	LD = ld
+	LDSHARED = gcc -shared
+	CFLAGS = -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wunused-variable -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration -Wdeprecated-declarations -Wno-packed-bitfield-compat -std=iso9899:1999  -fPIC
+	XCFLAGS = -D_FORTIFY_SOURCE=2 -fstack-protector -fno-strict-overflow -fvisibility=hidden -DRUBY_EXPORT
+	CPPFLAGS =   -I. -I.ext/include/x86_64-linux -I./include -I.
+	DLDFLAGS = -Wl,-soname,libruby.so.2.3  -fstack-protector
+	SOLIBS = -lpthread -ldl -lcrypt -lm
+Using built-in specs.
+COLLECT_GCC=gcc
+COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/4.9/lto-wrapper
+Target: x86_64-linux-gnu
+Configured with: ../src/configure -v --with-pkgversion='Debian 4.9.2-10' --with-bugurl=file:///usr/share/doc/gcc-4.9/README.Bugs --enable-languages=c,c++,java,go,d,fortran,objc,obj-c++ --prefix=/usr --program-suffix=-4.9 --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --with-gxx-include-dir=/usr/include/c++/4.9 --libdir=/usr/lib --enable-nls --with-sysroot=/ --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --with-system-zlib --disable-browser-plugin --enable-java-awt=gtk --enable-gtk-cairo --with-java-home=/usr/lib/jvm/java-1.5.0-gcj-4.9-amd64/jre --enable-java-home --with-jvm-root-dir=/usr/lib/jvm/java-1.5.0-gcj-4.9-amd64 --with-jvm-jar-dir=/usr/lib/jvm-exports/java-1.5.0-gcj-4.9-amd64 --with-arch-directory=amd64 --with-ecj-jar=/usr/share/java/eclipse-ecj.jar --enable-objc-gc --enable-multiarch --with-arch-32=i586 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
+Thread model: posix
+gcc version 4.9.2 (Debian 4.9.2-10)
+copying dummy probes.h
+compiling main.c
+compiling dmydln.c
+compiling miniinit.c
+compiling dmyext.c
+compiling miniprelude.c
+compiling array.c
+compiling bignum.c
+compiling class.c
+compiling compar.c
+compiling complex.c
+compiling dir.c
+compiling dln_find.c
+compiling encoding.c
+compiling enum.c
+compiling enumerator.c
+compiling error.c
+compiling eval.c
+eval.c: In function ‘rb_raise_jump’:
+eval.c:763:8: warning: unused variable ‘mid’ [-Wunused-variable]
+     ID mid = me->called_id;
+        ^
+compiling load.c
+compiling proc.c
+compiling file.c
+compiling gc.c
+compiling hash.c
+compiling inits.c
+compiling io.c
+compiling marshal.c
+compiling math.c
+compiling node.c
+compiling numeric.c
+compiling object.c
+compiling pack.c
+compiling parse.c
+compiling process.c
+compiling random.c
+compiling range.c
+compiling rational.c
+compiling re.c
+compiling regcomp.c
+compiling regenc.c
+compiling regerror.c
+compiling regexec.c
+compiling regparse.c
+compiling regsyntax.c
+compiling ruby.c
+compiling safe.c
+compiling signal.c
+compiling sprintf.c
+compiling st.c
+compiling strftime.c
+compiling string.c
+compiling struct.c
+compiling symbol.c
+compiling time.c
+compiling transcode.c
+compiling util.c
+compiling variable.c
+compiling version.c
+compiling compile.c
+compiling debug.c
+compiling iseq.c
+compiling vm.c
+compiling vm_dump.c
+compiling vm_backtrace.c
+compiling vm_trace.c
+compiling thread.c
+compiling cont.c
+compiling ./missing/explicit_bzero.c
+compiling ./missing/setproctitle.c
+compiling ./missing/strlcat.c
+compiling ./missing/strlcpy.c
+compiling addr2line.c
+compiling dmyenc.c
+compiling dln.c
+compiling localeinit.c
+compiling prelude.c
+compiling enc/ascii.c
+compiling enc/us_ascii.c
+compiling enc/unicode.c
+compiling enc/utf_8.c
+compiling enc/trans/newline.c
+linking miniruby
+generating encdb.h
+rbconfig.rb updated
+generating enc.mk
+encdb.h updated
+creating verconf.h
+verconf.h updated
+making srcs under enc
+compiling loadpath.c
+make[1]: Entering directory '/usr/src/ruby'
+make[1]: Nothing to be done for 'srcs'.
+make[1]: Leaving directory '/usr/src/ruby'
+generating transdb.h
+linking static-library libruby-static.a
+transdb.h updated
+verifying static-library libruby-static.a
+linking shared-library libruby.so.2.3.0
+generating makefile exts.mk
+making enc
+make[1]: Entering directory '/usr/src/ruby'
+compiling ./enc/encdb.c
+configuring -test-/array/resize
+configuring -test-/bignum
+configuring -test-/bug-3571
+configuring -test-/bug-5832
+configuring -test-/bug_reporter
+configuring -test-/class
+configuring -test-/debug
+configuring -test-/dln/empty
+configuring -test-/exception
+configuring -test-/fatal
+configuring -test-/file
+compiling ./enc/big5.c
+compiling ./enc/cp949.c
+compiling ./enc/emacs_mule.c
+compiling ./enc/euc_jp.c
+compiling ./enc/euc_kr.c
+compiling ./enc/euc_tw.c
+compiling ./enc/gb2312.c
+configuring -test-/float
+configuring -test-/funcall
+configuring -test-/gvl/call_without_gvl
+configuring -test-/hash
+configuring -test-/iseq_load
+configuring -test-/iter
+configuring -test-/load/dot.dot
+configuring -test-/marshal/compat
+configuring -test-/marshal/internal_ivar
+configuring -test-/marshal/usr
+configuring -test-/method
+configuring -test-/notimplement
+configuring -test-/num2int
+configuring -test-/path_to_class
+configuring -test-/popen_deadlock
+configuring -test-/postponed_job
+configuring -test-/printf
+configuring -test-/proc
+configuring -test-/rational
+configuring -test-/recursion
+configuring -test-/st/foreach
+configuring -test-/st/numhash
+configuring -test-/st/update
+configuring -test-/string
+configuring -test-/struct
+configuring -test-/symbol
+compiling ./enc/gb18030.c
+compiling ./enc/gbk.c
+configuring -test-/time
+configuring -test-/tracepoint
+configuring -test-/typeddata
+configuring -test-/vm
+configuring -test-/wait_for_single_fd
+configuring bigdecimal
+compiling ./enc/iso_8859_1.c
+compiling ./enc/iso_8859_2.c
+compiling ./enc/iso_8859_3.c
+compiling ./enc/iso_8859_4.c
+compiling ./enc/iso_8859_5.c
+compiling ./enc/iso_8859_6.c
+compiling ./enc/iso_8859_7.c
+compiling ./enc/iso_8859_8.c
+compiling ./enc/iso_8859_9.c
+compiling ./enc/iso_8859_10.c
+compiling ./enc/iso_8859_11.c
+compiling ./enc/iso_8859_13.c
+compiling ./enc/iso_8859_14.c
+compiling ./enc/iso_8859_15.c
+compiling ./enc/iso_8859_16.c
+compiling ./enc/koi8_r.c
+configuring cgi/escape
+configuring continuation
+configuring coverage
+configuring date
+configuring dbm
+compiling ./enc/koi8_u.c
+compiling ./enc/shift_jis.c
+compiling ./enc/utf_16be.c
+compiling ./enc/utf_16le.c
+compiling ./enc/utf_32be.c
+compiling ./enc/utf_32le.c
+compiling ./enc/windows_31j.c
+compiling ./enc/windows_1250.c
+compiling ./enc/windows_1251.c
+compiling ./enc/windows_1252.c
+linking encoding encdb.so
+linking encoding big5.so
+linking encoding cp949.so
+linking encoding emacs_mule.so
+linking encoding euc_jp.so
+linking encoding euc_kr.so
+linking encoding euc_tw.so
+linking encoding gb2312.so
+linking encoding gb18030.so
+linking encoding gbk.so
+linking encoding iso_8859_1.so
+linking encoding iso_8859_2.so
+linking encoding iso_8859_3.so
+linking encoding iso_8859_4.so
+linking encoding iso_8859_5.so
+linking encoding iso_8859_6.so
+linking encoding iso_8859_7.so
+linking encoding iso_8859_8.so
+linking encoding iso_8859_9.so
+linking encoding iso_8859_10.so
+linking encoding iso_8859_11.so
+linking encoding iso_8859_13.so
+linking encoding iso_8859_14.so
+linking encoding iso_8859_15.so
+linking encoding iso_8859_16.so
+linking encoding koi8_r.so
+linking encoding koi8_u.so
+linking encoding shift_jis.so
+linking encoding utf_16be.so
+linking encoding utf_16le.so
+linking encoding utf_32be.so
+linking encoding utf_32le.so
+linking encoding windows_31j.so
+linking encoding windows_1250.so
+linking encoding windows_1251.so
+linking encoding windows_1252.so
+make[1]: Leaving directory '/usr/src/ruby'
+making trans
+make[1]: Entering directory '/usr/src/ruby'
+compiling ./enc/trans/transdb.c
+compiling ./enc/trans/big5.c
+header: gdbm-ndbm.h
+library: gdbm_compat
+compiling ./enc/trans/chinese.c
+configuring digest
+configuring digest/bubblebabble
+configuring digest/md5
+configuring digest/rmd160
+configuring digest/sha1
+compiling ./enc/trans/ebcdic.c
+configuring digest/sha2
+compiling ./enc/trans/emoji.c
+configuring etc
+compiling ./enc/trans/emoji_iso2022_kddi.c
+compiling ./enc/trans/emoji_sjis_docomo.c
+compiling ./enc/trans/emoji_sjis_kddi.c
+configuring fcntl
+configuring fiber
+configuring fiddle
+compiling ./enc/trans/emoji_sjis_softbank.c
+compiling ./enc/trans/escape.c
+compiling ./enc/trans/gb18030.c
+compiling ./enc/trans/gbk.c
+compiling ./enc/trans/iso2022.c
+compiling ./enc/trans/japanese.c
+compiling ./enc/trans/japanese_euc.c
+compiling ./enc/trans/japanese_sjis.c
+compiling ./enc/trans/korean.c
+compiling ./enc/trans/single_byte.c
+compiling ./enc/trans/utf8_mac.c
+configuring gdbm
+configuring io/console
+configuring io/nonblock
+compiling ./enc/trans/utf_16_32.c
+configuring io/wait
+configuring json
+configuring json/generator
+configuring json/parser
+linking transcoder transdb.so
+linking transcoder big5.so
+linking transcoder chinese.so
+linking transcoder ebcdic.so
+linking transcoder emoji.so
+linking transcoder emoji_iso2022_kddi.so
+linking transcoder emoji_sjis_docomo.so
+linking transcoder emoji_sjis_kddi.so
+linking transcoder emoji_sjis_softbank.so
+linking transcoder escape.so
+linking transcoder gb18030.so
+linking transcoder gbk.so
+linking transcoder iso2022.so
+linking transcoder japanese.so
+linking transcoder japanese_euc.so
+linking transcoder japanese_sjis.so
+linking transcoder korean.so
+linking transcoder single_byte.so
+linking transcoder utf8_mac.so
+linking transcoder utf_16_32.so
+make[1]: Leaving directory '/usr/src/ruby'
+making encs
+configuring mathn/complex
+make[1]: Entering directory '/usr/src/ruby'
+configuring mathn/rational
+configuring nkf
+make[1]: Leaving directory '/usr/src/ruby'
+configuring objspace
+configuring openssl
+Failed to configure openssl. It will not be installed.
+configuring pathname
+configuring psych
+configuring pty
+configuring racc/cparse
+configuring rbconfig/sizeof
+configuring readline
+configuring ripper
+configuring sdbm
+configuring socket
+configuring stringio
+configuring strscan
+configuring syslog
+configuring thread
+configuring tk
+............
+check struct members..
+check libraries....
+Use ActiveTcl libraries (if available).
+Search tclConfig.sh and tkConfig.sh............................
+Fail to find [tclConfig.sh, tkConfig.sh]
+Use X11 libraries (or use TK_XINCLUDES/TK_XLIBSW information on tkConfig.sh).
+Warning:: cannot find X11 library. tcltklib will not be compiled (tcltklib is disabled on your Ruby. That is, Ruby/Tk will not work). Please check configure options. If your Tcl/Tk don't require X11, please try --without-X11.
+Can't find X11 libraries.
+So, can't make tcltklib.so which is required by Ruby/Tk.
+Failed to configure tk. It will not be installed.
+Failed to configure tk/tkutil. It will not be installed.
+configuring zlib
+make[1]: Entering directory '/usr/src/ruby'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/bignum'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/array/resize'
+compiling intpack.c
+compiling resize.c
+linking shared-object -test-/array/resize.so
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/array/resize'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/bug-3571'
+compiling bug.c
+compiling init.c
+linking shared-object -test-/bug-3571/bug.so
+compiling mul.c
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/bug-3571'
+compiling str2big.c
+compiling big2str.c
+compiling div.c
+compiling bigzero.c
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/bug-5832'
+compiling bug.c
+linking shared-object -test-/bug-5832/bug.so
+linking shared-object -test-/bignum.so
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/bug-5832'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/bug_reporter'
+compiling bug_reporter.c
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/bignum'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/class'
+compiling init.c
+linking shared-object -test-/bug_reporter/bug_reporter.so
+compiling class2name.c
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/bug_reporter'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/debug'
+compiling init.c
+linking shared-object -test-/class.so
+compiling profile_frames.c
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/class'
+compiling inspector.c
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/dln/empty'
+compiling empty.c
+linking shared-object -test-/debug.so
+linking shared-object -test-/dln/empty.so
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/debug'
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/dln/empty'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/exception'
+compiling init.c
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/fatal'
+compiling rb_fatal.c
+compiling ensured.c
+linking shared-object -test-/fatal/rb_fatal.so
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/fatal'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/file'
+compiling init.c
+compiling enc_raise.c
+compiling stat.c
+compiling dataerror.c
+compiling fs.c
+linking shared-object -test-/exception.so
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/exception'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/float'
+compiling nextafter.c
+linking shared-object -test-/file.so
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/file'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/funcall'
+compiling passing_block.c
+compiling init.c
+linking shared-object -test-/funcall/funcall.so
+linking shared-object -test-/float.so
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/funcall'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/gvl/call_without_gvl'
+compiling call_without_gvl.c
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/float'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/hash'
+compiling delete.c
+linking shared-object -test-/gvl/call_without_gvl.so
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/gvl/call_without_gvl'
+compiling init.c
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/iseq_load'
+compiling iseq_load.c
+linking shared-object -test-/hash.so
+linking shared-object -test-/iseq_load/iseq_load.so
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/hash'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/iter'
+compiling init.c
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/iseq_load'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/load/dot.dot'
+compiling dot.dot.c
+linking shared-object -test-/load/dot.dot/dot.dot.so
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/load/dot.dot'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/marshal/compat'
+compiling usrcompat.c
+compiling break.c
+compiling yield.c
+linking shared-object -test-/marshal/compat.so
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/marshal/compat'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/marshal/internal_ivar'
+compiling internal_ivar.c
+linking shared-object -test-/iter.so
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/iter'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/marshal/usr'
+compiling usrmarshal.c
+linking shared-object -test-/marshal/internal_ivar.so
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/marshal/internal_ivar'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/method'
+compiling init.c
+linking shared-object -test-/marshal/usr.so
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/marshal/usr'
+compiling arity.c
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/notimplement'
+compiling bug.c
+linking shared-object -test-/method.so
+linking shared-object -test-/notimplement.so
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/method'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/num2int'
+compiling num2int.c
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/notimplement'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/path_to_class'
+compiling path_to_class.c
+linking shared-object -test-/path_to_class/path_to_class.so
+linking shared-object -test-/num2int/num2int.so
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/path_to_class'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/popen_deadlock'
+compiling infinite_loop_dlsym.c
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/num2int'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/postponed_job'
+compiling postponed_job.c
+linking shared-object -test-/popen_deadlock/infinite_loop_dlsym.so
+linking shared-object -test-/postponed_job.so
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/popen_deadlock'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/printf'
+compiling printf.c
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/postponed_job'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/proc'
+compiling init.c
+compiling super.c
+linking shared-object -test-/printf.so
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/printf'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/rational'
+compiling rat.c
+compiling receiver.c
+linking shared-object -test-/proc.so
+linking shared-object -test-/rational.so
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/proc'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/recursion'
+compiling recursion.c
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/rational'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/st/foreach'
+compiling foreach.c
+linking shared-object -test-/recursion.so
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/recursion'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/st/numhash'
+compiling numhash.c
+linking shared-object -test-/st/foreach.so
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/st/foreach'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/st/update'
+compiling update.c
+linking shared-object -test-/st/numhash.so
+linking shared-object -test-/st/update.so
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/st/numhash'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/string'
+compiling init.c
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/st/update'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/struct'
+compiling init.c
+compiling coderange.c
+compiling duplicate.c
+compiling qsort.c
+compiling member.c
+linking shared-object -test-/struct.so
+compiling nofree.c
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/struct'
+compiling modify.c
+compiling cstr.c
+compiling enc_str_buf_cat.c
+compiling fstring.c
+compiling normalize.c
+compiling enc_associate.c
+compiling set_len.c
+compiling ellipsize.c
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/symbol'
+compiling init.c
+linking shared-object -test-/string.so
+compiling type.c
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/string'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/time'
+compiling init.c
+linking shared-object -test-/symbol.so
+compiling new.c
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/symbol'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/tracepoint'
+compiling tracepoint.c
+linking shared-object -test-/time.so
+compiling gc_hook.c
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/time'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/typeddata'
+compiling typeddata.c
+linking shared-object -test-/typeddata/typeddata.so
+linking shared-object -test-/tracepoint.so
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/typeddata'
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/tracepoint'
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/vm'
+compiling at_exit.c
+make[2]: Entering directory '/usr/src/ruby/ext/-test-/wait_for_single_fd'
+compiling wait_for_single_fd.c
+linking shared-object -test-/vm/at_exit.so
+linking shared-object -test-/wait_for_single_fd/wait_for_single_fd.so
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/vm'
+make[2]: Entering directory '/usr/src/ruby/ext/bigdecimal'
+compiling bigdecimal.c
+make[2]: Leaving directory '/usr/src/ruby/ext/-test-/wait_for_single_fd'
+make[2]: Entering directory '/usr/src/ruby/ext/cgi/escape'
+compiling escape.c
+linking shared-object cgi/escape.so
+make[2]: Leaving directory '/usr/src/ruby/ext/cgi/escape'
+make[2]: Entering directory '/usr/src/ruby/ext/continuation'
+compiling continuation.c
+linking shared-object continuation.so
+make[2]: Leaving directory '/usr/src/ruby/ext/continuation'
+installing default bigdecimal libraries
+make[2]: Entering directory '/usr/src/ruby/ext/coverage'
+compiling coverage.c
+linking shared-object coverage.so
+make[2]: Leaving directory '/usr/src/ruby/ext/coverage'
+make[2]: Entering directory '/usr/src/ruby/ext/date'
+compiling date_parse.c
+compiling date_core.c
+linking shared-object bigdecimal.so
+make[2]: Leaving directory '/usr/src/ruby/ext/bigdecimal'
+make[2]: Entering directory '/usr/src/ruby/ext/dbm'
+compiling dbm.c
+linking shared-object dbm.so
+make[2]: Leaving directory '/usr/src/ruby/ext/dbm'
+make[2]: Entering directory '/usr/src/ruby/ext/digest'
+compiling digest.c
+linking shared-object digest.so
+installing digest libraries
+installing default digest libraries
+make[2]: Leaving directory '/usr/src/ruby/ext/digest'
+make[2]: Entering directory '/usr/src/ruby/ext/digest/bubblebabble'
+compiling bubblebabble.c
+linking shared-object digest/bubblebabble.so
+make[2]: Leaving directory '/usr/src/ruby/ext/digest/bubblebabble'
+make[2]: Entering directory '/usr/src/ruby/ext/digest/md5'
+compiling md5init.c
+compiling md5.c
+linking shared-object digest/md5.so
+make[2]: Leaving directory '/usr/src/ruby/ext/digest/md5'
+compiling date_strftime.c
+compiling date_strptime.c
+installing default date_core libraries
+make[2]: Entering directory '/usr/src/ruby/ext/digest/rmd160'
+compiling rmd160init.c
+compiling rmd160.c
+linking shared-object digest/rmd160.so
+make[2]: Leaving directory '/usr/src/ruby/ext/digest/rmd160'
+make[2]: Entering directory '/usr/src/ruby/ext/digest/sha1'
+compiling sha1init.c
+linking shared-object date_core.so
+compiling sha1.c
+make[2]: Leaving directory '/usr/src/ruby/ext/date'
+make[2]: Entering directory '/usr/src/ruby/ext/digest/sha2'
+compiling sha2init.c
+compiling sha2.c
+linking shared-object digest/sha1.so
+make[2]: Leaving directory '/usr/src/ruby/ext/digest/sha1'
+make[2]: Entering directory '/usr/src/ruby/ext/etc'
+generating constant definitions
+compiling etc.c
+linking shared-object digest/sha2.so
+installing default sha2 libraries
+make[2]: Leaving directory '/usr/src/ruby/ext/digest/sha2'
+make[2]: Entering directory '/usr/src/ruby/ext/fcntl'
+compiling fcntl.c
+linking shared-object fcntl.so
+make[2]: Leaving directory '/usr/src/ruby/ext/fcntl'
+make[2]: Entering directory '/usr/src/ruby/ext/fiber'
+compiling fiber.c
+linking shared-object fiber.so
+make[2]: Leaving directory '/usr/src/ruby/ext/fiber'
+make[2]: Entering directory '/usr/src/ruby/ext/fiddle'
+compiling function.c
+linking shared-object etc.so
+make[2]: Leaving directory '/usr/src/ruby/ext/etc'
+make[2]: Entering directory '/usr/src/ruby/ext/gdbm'
+compiling gdbm.c
+compiling closure.c
+compiling handle.c
+compiling fiddle.c
+compiling conversions.c
+linking shared-object gdbm.so
+make[2]: Leaving directory '/usr/src/ruby/ext/gdbm'
+make[2]: Entering directory '/usr/src/ruby/ext/io/console'
+compiling pointer.c
+compiling console.c
+make[3]: warning: jobserver unavailable: using -j1.  Add '+' to parent make rule.
+make[3]: Entering directory '/usr/src/ruby/ext/fiddle'
+make 'AR_FLAGS=' 'CC_FOR_BUILD=' 'CFLAGS=-O3 -fno-fast-math -ggdb3   -fPIC -Wall -fexceptions' 'CXXFLAGS=-O3 -fno-fast-math -ggdb3 ' 'CFLAGS_FOR_BUILD=' 'CFLAGS_FOR_TARGET=' 'INSTALL=/usr/bin/install -c' 'INSTALL_DATA=/usr/bin/install -c -m 644' 'INSTALL_PROGRAM=/usr/bin/install -c' 'INSTALL_SCRIPT=/usr/bin/install -c' 'JC1FLAGS=' 'LDFLAGS=-L. -fstack-protector -rdynamic -Wl,-export-dynamic  -L../../.. -Wl,-R/usr/local/lib -L/usr/local/lib -lruby' 'LIBCFLAGS=' 'LIBCFLAGS_FOR_TARGET=' 'MAKE=make' 'MAKEINFO=/bin/bash /usr/src/ruby/ext/fiddle/libffi-3.2.1/missing makeinfo ' 'PICFLAG=' 'PICFLAG_FOR_TARGET=' 'RUNTESTFLAGS=' 'SHELL=/bin/bash' 'exec_prefix=/usr/local' 'infodir=/usr/local/share/info' 'libdir=/usr/local/lib' 'mandir=/usr/local/share/man' 'prefix=/usr/local' 'AR=ar' 'AS=as' 'CC=gcc' 'CXX=g++' 'LD=ld' 'NM=nm' 'RANLIB=ranlib' 'DESTDIR=' all-recursive
+make[4]: Entering directory '/usr/src/ruby/ext/fiddle/libffi-3.2.1'
+Making all in include
+make[5]: Entering directory '/usr/src/ruby/ext/fiddle/libffi-3.2.1/include'
+make[5]: Nothing to be done for 'all'.
+make[5]: Leaving directory '/usr/src/ruby/ext/fiddle/libffi-3.2.1/include'
+Making all in testsuite
+make[5]: Entering directory '/usr/src/ruby/ext/fiddle/libffi-3.2.1/testsuite'
+make[5]: Nothing to be done for 'all'.
+make[5]: Leaving directory '/usr/src/ruby/ext/fiddle/libffi-3.2.1/testsuite'
+Making all in man
+make[5]: Entering directory '/usr/src/ruby/ext/fiddle/libffi-3.2.1/man'
+make[5]: Nothing to be done for 'all'.
+make[5]: Leaving directory '/usr/src/ruby/ext/fiddle/libffi-3.2.1/man'
+make[5]: Entering directory '/usr/src/ruby/ext/fiddle/libffi-3.2.1'
+  CC       src/prep_cif.lo
+linking shared-object io/console.so
+installing default console libraries
+make[2]: Leaving directory '/usr/src/ruby/ext/io/console'
+make[2]: Entering directory '/usr/src/ruby/ext/io/nonblock'
+compiling nonblock.c
+linking shared-object io/nonblock.so
+make[2]: Leaving directory '/usr/src/ruby/ext/io/nonblock'
+make[2]: Entering directory '/usr/src/ruby/ext/io/wait'
+compiling wait.c
+  CC       src/types.lo
+linking shared-object io/wait.so
+make[2]: Leaving directory '/usr/src/ruby/ext/io/wait'
+make[2]: Entering directory '/usr/src/ruby/ext/json'
+installing default libraries
+make[2]: Leaving directory '/usr/src/ruby/ext/json'
+  CC       src/raw_api.lo
+installing default fiddle libraries
+make[2]: Entering directory '/usr/src/ruby/ext/json/generator'
+compiling generator.c
+  CC       src/java_raw_api.lo
+  CC       src/closures.lo
+linking shared-object json/ext/generator.so
+make[2]: Leaving directory '/usr/src/ruby/ext/json/generator'
+make[2]: Entering directory '/usr/src/ruby/ext/json/parser'
+compiling parser.c
+linking shared-object json/ext/parser.so
+make[2]: Leaving directory '/usr/src/ruby/ext/json/parser'
+make[2]: Entering directory '/usr/src/ruby/ext/mathn/complex'
+compiling complex.c
+linking shared-object mathn/complex.so
+make[2]: Leaving directory '/usr/src/ruby/ext/mathn/complex'
+make[2]: Entering directory '/usr/src/ruby/ext/mathn/rational'
+compiling rational.c
+linking shared-object mathn/rational.so
+  CC       src/x86/ffi64.lo
+make[2]: Leaving directory '/usr/src/ruby/ext/mathn/rational'
+make[2]: Entering directory '/usr/src/ruby/ext/nkf'
+compiling nkf.c
+  CPPAS    src/x86/unix64.lo
+  CC       src/x86/ffi.lo
+  CPPAS    src/x86/sysv.lo
+  CCLD     libffi_convenience.la
+  CCLD     libffi.la
+make[5]: Leaving directory '/usr/src/ruby/ext/fiddle/libffi-3.2.1'
+make[4]: Leaving directory '/usr/src/ruby/ext/fiddle/libffi-3.2.1'
+make[3]: Leaving directory '/usr/src/ruby/ext/fiddle/libffi-3.2.1'
+linking shared-object fiddle.so
+make[2]: Leaving directory '/usr/src/ruby/ext/fiddle'
+make[2]: Entering directory '/usr/src/ruby/ext/objspace'
+compiling objspace_dump.c
+compiling objspace.c
+compiling object_tracing.c
+linking shared-object objspace.so
+make[2]: Leaving directory '/usr/src/ruby/ext/objspace'
+installing default nkf libraries
+make[2]: Entering directory '/usr/src/ruby/ext/openssl'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/usr/src/ruby/ext/openssl'
+make[2]: Entering directory '/usr/src/ruby/ext/pathname'
+compiling pathname.c
+linking shared-object nkf.so
+make[2]: Leaving directory '/usr/src/ruby/ext/nkf'
+make[2]: Entering directory '/usr/src/ruby/ext/psych'
+compiling psych.c
+compiling psych_parser.c
+compiling psych_emitter.c
+installing default pathname libraries
+linking shared-object pathname.so
+make[2]: Leaving directory '/usr/src/ruby/ext/pathname'
+compiling psych_yaml_tree.c
+compiling psych_to_ruby.c
+compiling ../.././ext/psych/yaml/writer.c
+compiling ../.././ext/psych/yaml/loader.c
+compiling ../.././ext/psych/yaml/dumper.c
+compiling ../.././ext/psych/yaml/reader.c
+compiling ../.././ext/psych/yaml/emitter.c
+compiling ../.././ext/psych/yaml/scanner.c
+compiling ../.././ext/psych/yaml/api.c
+compiling ../.././ext/psych/yaml/parser.c
+make[2]: Entering directory '/usr/src/ruby/ext/pty'
+compiling pty.c
+installing default pty libraries
+linking shared-object pty.so
+make[2]: Leaving directory '/usr/src/ruby/ext/pty'
+make[2]: Entering directory '/usr/src/ruby/ext/racc/cparse'
+compiling cparse.c
+linking shared-object psych.so
+installing default psych libraries
+make[2]: Leaving directory '/usr/src/ruby/ext/psych'
+make[2]: Entering directory '/usr/src/ruby/ext/rbconfig/sizeof'
+compiling sizes.c
+linking shared-object racc/cparse.so
+make[2]: Leaving directory '/usr/src/ruby/ext/racc/cparse'
+make[2]: Entering directory '/usr/src/ruby/ext/readline'
+compiling readline.c
+linking shared-object rbconfig/sizeof.so
+make[2]: Leaving directory '/usr/src/ruby/ext/rbconfig/sizeof'
+make[2]: Entering directory '/usr/src/ruby/ext/ripper'
+compiling ripper.c
+linking shared-object readline.so
+make[2]: Leaving directory '/usr/src/ruby/ext/readline'
+checking ../.././parse.y and ../.././ext/ripper/eventids2.c
+installing default ripper libraries
+make[2]: Entering directory '/usr/src/ruby/ext/sdbm'
+compiling init.c
+compiling _sdbm.c
+linking shared-object sdbm.so
+make[2]: Leaving directory '/usr/src/ruby/ext/sdbm'
+make[2]: Entering directory '/usr/src/ruby/ext/socket'
+generating constant definitions
+generating constant definitions
+compiling basicsocket.c
+compiling socket.c
+compiling ipsocket.c
+compiling tcpsocket.c
+compiling tcpserver.c
+compiling sockssocket.c
+compiling udpsocket.c
+compiling unixsocket.c
+compiling unixserver.c
+compiling option.c
+compiling ancdata.c
+linking shared-object ripper.so
+make[2]: Leaving directory '/usr/src/ruby/ext/ripper'
+make[2]: Entering directory '/usr/src/ruby/ext/stringio'
+compiling stringio.c
+compiling raddrinfo.c
+linking shared-object stringio.so
+make[2]: Leaving directory '/usr/src/ruby/ext/stringio'
+make[2]: Entering directory '/usr/src/ruby/ext/strscan'
+compiling strscan.c
+compiling ifaddr.c
+installing default socket libraries
+compiling init.c
+linking shared-object strscan.so
+make[2]: Leaving directory '/usr/src/ruby/ext/strscan'
+make[2]: Entering directory '/usr/src/ruby/ext/syslog'
+compiling syslog.c
+compiling constants.c
+linking shared-object syslog.so
+installing default syslog libraries
+make[2]: Leaving directory '/usr/src/ruby/ext/syslog'
+make[2]: Entering directory '/usr/src/ruby/ext/thread'
+compiling thread.c
+linking shared-object thread.so
+make[2]: Leaving directory '/usr/src/ruby/ext/thread'
+make[2]: Entering directory '/usr/src/ruby/ext/tk'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/usr/src/ruby/ext/tk'
+make[2]: Entering directory '/usr/src/ruby/ext/tk/tkutil'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/usr/src/ruby/ext/tk/tkutil'
+make[2]: Entering directory '/usr/src/ruby/ext/zlib'
+compiling zlib.c
+linking shared-object socket.so
+make[2]: Leaving directory '/usr/src/ruby/ext/socket'
+linking shared-object zlib.so
+make[2]: Leaving directory '/usr/src/ruby/ext/zlib'
+make[2]: Entering directory '/usr/src/ruby'
+linking shared-library libruby.so.2.3.0
+linking ruby
+make[2]: Leaving directory '/usr/src/ruby'
+make[1]: Leaving directory '/usr/src/ruby'
++ make install
+generating x86_64-linux-fake.rb
+x86_64-linux-fake.rb updated
+	CC = gcc
+	LD = ld
+	LDSHARED = gcc -shared
+	CFLAGS = -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wunused-variable -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration -Wdeprecated-declarations -Wno-packed-bitfield-compat -std=iso9899:1999  -fPIC
+	XCFLAGS = -D_FORTIFY_SOURCE=2 -fstack-protector -fno-strict-overflow -fvisibility=hidden -DRUBY_EXPORT
+	CPPFLAGS =   -I. -I.ext/include/x86_64-linux -I./include -I.
+	DLDFLAGS = -Wl,-soname,libruby.so.2.3  -fstack-protector
+	SOLIBS = -lpthread -ldl -lcrypt -lm
+Using built-in specs.
+COLLECT_GCC=gcc
+COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/4.9/lto-wrapper
+Target: x86_64-linux-gnu
+Configured with: ../src/configure -v --with-pkgversion='Debian 4.9.2-10' --with-bugurl=file:///usr/share/doc/gcc-4.9/README.Bugs --enable-languages=c,c++,java,go,d,fortran,objc,obj-c++ --prefix=/usr --program-suffix=-4.9 --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --with-gxx-include-dir=/usr/include/c++/4.9 --libdir=/usr/lib --enable-nls --with-sysroot=/ --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --with-system-zlib --disable-browser-plugin --enable-java-awt=gtk --enable-gtk-cairo --with-java-home=/usr/lib/jvm/java-1.5.0-gcj-4.9-amd64/jre --enable-java-home --with-jvm-root-dir=/usr/lib/jvm/java-1.5.0-gcj-4.9-amd64 --with-jvm-jar-dir=/usr/lib/jvm-exports/java-1.5.0-gcj-4.9-amd64 --with-arch-directory=amd64 --with-ecj-jar=/usr/share/java/eclipse-ecj.jar --enable-objc-gc --enable-multiarch --with-arch-32=i586 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
+Thread model: posix
+gcc version 4.9.2 (Debian 4.9.2-10)
+generating enc.mk
+making srcs under enc
+make[1]: Entering directory '/usr/src/ruby'
+make[1]: Nothing to be done for 'srcs'.
+make[1]: Leaving directory '/usr/src/ruby'
+generating transdb.h
+transdb.h unchanged
+generating makefile exts.mk
+Failed to configure openssl. It will not be installed.
+configuring socket
+Failed to configure tk. It will not be installed.
+Failed to configure tk/tkutil. It will not be installed.
+make[1]: Entering directory '/usr/src/ruby'
+make[2]: Entering directory '/usr/src/ruby/ext/bigdecimal'
+installing default bigdecimal libraries
+make[2]: Leaving directory '/usr/src/ruby/ext/bigdecimal'
+make[2]: Entering directory '/usr/src/ruby/ext/date'
+installing default date_core libraries
+make[2]: Leaving directory '/usr/src/ruby/ext/date'
+make[2]: Entering directory '/usr/src/ruby/ext/digest'
+installing digest libraries
+installing default digest libraries
+make[2]: Leaving directory '/usr/src/ruby/ext/digest'
+make[2]: Entering directory '/usr/src/ruby/ext/digest/sha2'
+installing default sha2 libraries
+make[2]: Leaving directory '/usr/src/ruby/ext/digest/sha2'
+make[2]: Entering directory '/usr/src/ruby/ext/fiddle'
+installing default fiddle libraries
+make[2]: Leaving directory '/usr/src/ruby/ext/fiddle'
+make[2]: Entering directory '/usr/src/ruby/ext/io/console'
+installing default console libraries
+make[2]: Leaving directory '/usr/src/ruby/ext/io/console'
+make[2]: Entering directory '/usr/src/ruby/ext/json'
+installing default libraries
+make[2]: Leaving directory '/usr/src/ruby/ext/json'
+make[2]: Entering directory '/usr/src/ruby/ext/nkf'
+installing default nkf libraries
+make[2]: Leaving directory '/usr/src/ruby/ext/nkf'
+make[2]: Entering directory '/usr/src/ruby/ext/openssl'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/usr/src/ruby/ext/openssl'
+make[2]: Entering directory '/usr/src/ruby/ext/pathname'
+installing default pathname libraries
+make[2]: Leaving directory '/usr/src/ruby/ext/pathname'
+make[2]: Entering directory '/usr/src/ruby/ext/psych'
+installing default psych libraries
+make[2]: Leaving directory '/usr/src/ruby/ext/psych'
+make[2]: Entering directory '/usr/src/ruby/ext/pty'
+installing default pty libraries
+make[2]: Leaving directory '/usr/src/ruby/ext/pty'
+make[2]: Entering directory '/usr/src/ruby/ext/ripper'
+installing default ripper libraries
+checking ../.././parse.y and ../.././ext/ripper/eventids2.c
+make[2]: Leaving directory '/usr/src/ruby/ext/ripper'
+make[2]: Entering directory '/usr/src/ruby/ext/socket'
+linking shared-object socket.so
+installing default socket libraries
+make[2]: Leaving directory '/usr/src/ruby/ext/socket'
+make[2]: Entering directory '/usr/src/ruby/ext/syslog'
+installing default syslog libraries
+make[2]: Leaving directory '/usr/src/ruby/ext/syslog'
+make[2]: Entering directory '/usr/src/ruby/ext/tk'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/usr/src/ruby/ext/tk'
+make[2]: Entering directory '/usr/src/ruby/ext/tk/tkutil'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/usr/src/ruby/ext/tk/tkutil'
+make[2]: Entering directory '/usr/src/ruby'
+make[2]: 'ruby' is up to date.
+make[2]: Leaving directory '/usr/src/ruby'
+make[1]: Leaving directory '/usr/src/ruby'
+making enc
+make[1]: Entering directory '/usr/src/ruby'
+make[1]: Nothing to be done for 'enc'.
+make[1]: Leaving directory '/usr/src/ruby'
+making trans
+make[1]: Entering directory '/usr/src/ruby'
+make[1]: Nothing to be done for './enc/trans'.
+make[1]: Leaving directory '/usr/src/ruby'
+making encs
+make[1]: Entering directory '/usr/src/ruby'
+make[1]: Leaving directory '/usr/src/ruby'
+./miniruby -I./lib -I. -I.ext/common  ./tool/runruby.rb --extout=.ext  -- --disable-gems -r./x86_64-linux-fake ./tool/rbinstall.rb --make="make" --dest-dir="" --extout=".ext" --mflags="" --make-flags="" --data-mode=0644 --prog-mode=0755 --installed-list .installed.list --mantype="man"
+installing binary commands:   /usr/local/bin
+installing base libraries:    /usr/local/lib
+installing arch files:        /usr/local/lib/ruby/2.3.0/x86_64-linux
+installing pkgconfig data:    /usr/local/lib/pkgconfig
+installing command scripts:   /usr/local/bin
+installing library scripts:   /usr/local/lib/ruby/2.3.0
+installing common headers:    /usr/local/include/ruby-2.3.0
+installing manpages:          /usr/local/share/man/man1
+installing extension objects: /usr/local/lib/ruby/2.3.0/x86_64-linux
+installing extension objects: /usr/local/lib/ruby/site_ruby/2.3.0/x86_64-linux
+installing extension objects: /usr/local/lib/ruby/vendor_ruby/2.3.0/x86_64-linux
+installing extension headers: /usr/local/include/ruby-2.3.0/x86_64-linux
+installing extension scripts: /usr/local/lib/ruby/2.3.0
+installing extension scripts: /usr/local/lib/ruby/site_ruby/2.3.0
+installing extension scripts: /usr/local/lib/ruby/vendor_ruby/2.3.0
+installing extension headers: /usr/local/include/ruby-2.3.0/ruby
+installing default gems:      /usr/local/lib/ruby/gems/2.3.0 (build_info, cache, doc, extensions, gems, specifications)
+                              bigdecimal 1.2.8
+                              io-console 0.4.5
+                              json 1.8.3
+                              psych 2.1.0
+                              rdoc 4.2.1
+installing bundle gems:       /usr/local/lib/ruby/gems/2.3.0 (build_info, cache, doc, extensions, gems, specifications)
+                              did_you_mean 1.0.0
+                              minitest 5.8.5
+                              power_assert 0.2.6
+                              test-unit 3.1.5
+                              rake 10.4.2
+                              net-telnet 0.1.1
++ apt-get purge -y --auto-remove autoconf bison gcc libbz2-dev libgdbm-dev libglib2.0-dev libncurses-dev libreadline-dev libxml2-dev libxslt-dev make ruby wget xz-utils
+Reading package lists...
+Building dependency tree...
+Reading state information...
+The following packages will be REMOVED:
+  autoconf* binutils* bison* cpp* cpp-4.9* gcc* gcc-4.9* libasan1* libatomic1*
+  libbison-dev* libbz2-dev* libcilkrts5* libcloog-isl4* libelfg0*
+  libgcc-4.9-dev* libgdbm-dev* libgdbm3* libglib2.0-0* libglib2.0-bin*
+  libglib2.0-data* libglib2.0-dev* libgomp1* libicu52* libisl10* libitm1*
+  liblsan0* libmpc3* libmpfr4* libpcre3-dev* libpcrecpp0* libpsl0*
+  libpython-stdlib* libpython2.7-minimal* libpython2.7-stdlib* libquadmath0*
+  libreadline-dev* libreadline6-dev* libruby2.1* libsigsegv2* libtsan0*
+  libubsan0* libxml2* libxml2-dev* libxslt1-dev* libxslt1.1* libyaml-0-2* m4*
+  make* mime-support* perl* perl-modules* pkg-config* python* python-minimal*
+  python2.7* python2.7-minimal* ruby* ruby2.1* rubygems-integration* wget*
+  xz-utils* zlib1g-dev*
+0 upgraded, 0 newly installed, 62 to remove and 0 not upgraded.
+After this operation, 210 MB disk space will be freed.
+(Reading database ... 15541 files and directories currently installed.)
+Removing autoconf (2.69-8) ...
+Purging configuration files for autoconf (2.69-8) ...
+Removing gcc (4:4.9.2-2) ...
+Removing gcc-4.9 (4.9.2-10) ...
+Removing binutils (2.25-5) ...
+Purging configuration files for binutils (2.25-5) ...
+Removing bison (2:3.0.2.dfsg-2) ...
+Removing cpp (4:4.9.2-2) ...
+Removing cpp-4.9 (4.9.2-10) ...
+Removing libgcc-4.9-dev:amd64 (4.9.2-10) ...
+Removing libasan1:amd64 (4.9.2-10) ...
+Purging configuration files for libasan1:amd64 (4.9.2-10) ...
+Removing libatomic1:amd64 (4.9.2-10) ...
+Purging configuration files for libatomic1:amd64 (4.9.2-10) ...
+Removing libbison-dev:amd64 (2:3.0.2.dfsg-2) ...
+Removing libbz2-dev:amd64 (1.0.6-7+b3) ...
+Removing libcilkrts5:amd64 (4.9.2-10) ...
+Purging configuration files for libcilkrts5:amd64 (4.9.2-10) ...
+Removing libcloog-isl4:amd64 (0.18.2-1+b2) ...
+Purging configuration files for libcloog-isl4:amd64 (0.18.2-1+b2) ...
+Removing libglib2.0-dev (2.42.1-1+b1) ...
+Removing libglib2.0-bin (2.42.1-1+b1) ...
+Purging configuration files for libglib2.0-bin (2.42.1-1+b1) ...
+Removing libelfg0:amd64 (0.8.13-5) ...
+Purging configuration files for libelfg0:amd64 (0.8.13-5) ...
+Removing libgdbm-dev (1.8.3-13.1) ...
+Removing perl (5.20.2-3+deb8u6) ...
+Removing ruby (1:2.1.5+deb8u2) ...
+Removing ruby2.1 (2.1.5-2+deb8u3) ...
+Removing libruby2.1:amd64 (2.1.5-2+deb8u3) ...
+Purging configuration files for libruby2.1:amd64 (2.1.5-2+deb8u3) ...
+Removing libgdbm3:amd64 (1.8.3-13.1) ...
+Purging configuration files for libgdbm3:amd64 (1.8.3-13.1) ...
+Removing pkg-config (0.28-1) ...
+Removing libglib2.0-0:amd64 (2.42.1-1+b1) ...
+Purging configuration files for libglib2.0-0:amd64 (2.42.1-1+b1) ...
+Removing libglib2.0-data (2.42.1-1) ...
+Removing libgomp1:amd64 (4.9.2-10) ...
+Purging configuration files for libgomp1:amd64 (4.9.2-10) ...
+Removing wget (1.16-1+deb8u1) ...
+Purging configuration files for wget (1.16-1+deb8u1) ...
+Removing libpsl0:amd64 (0.5.1-1) ...
+Purging configuration files for libpsl0:amd64 (0.5.1-1) ...
+Removing libicu52:amd64 (52.1-8+deb8u3) ...
+Purging configuration files for libicu52:amd64 (52.1-8+deb8u3) ...
+Removing libisl10:amd64 (0.12.2-2) ...
+Purging configuration files for libisl10:amd64 (0.12.2-2) ...
+Removing libitm1:amd64 (4.9.2-10) ...
+Purging configuration files for libitm1:amd64 (4.9.2-10) ...
+Removing liblsan0:amd64 (4.9.2-10) ...
+Purging configuration files for liblsan0:amd64 (4.9.2-10) ...
+Removing libmpc3:amd64 (1.0.2-1) ...
+Purging configuration files for libmpc3:amd64 (1.0.2-1) ...
+Removing libmpfr4:amd64 (3.1.2-2) ...
+Purging configuration files for libmpfr4:amd64 (3.1.2-2) ...
+Removing libpcre3-dev:amd64 (2:8.35-3.3+deb8u4) ...
+Removing libpcrecpp0:amd64 (2:8.35-3.3+deb8u4) ...
+Purging configuration files for libpcrecpp0:amd64 (2:8.35-3.3+deb8u4) ...
+Removing python (2.7.9-1) ...
+Purging configuration files for python (2.7.9-1) ...
+Removing libpython-stdlib:amd64 (2.7.9-1) ...
+Removing python-minimal (2.7.9-1) ...
+Removing python2.7 (2.7.9-2+deb8u1) ...
+Purging configuration files for python2.7 (2.7.9-2+deb8u1) ...
+Removing python2.7-minimal (2.7.9-2+deb8u1) ...
+Unlinking and removing bytecode for runtime python2.7
+Purging configuration files for python2.7-minimal (2.7.9-2+deb8u1) ...
+Removing libpython2.7-stdlib:amd64 (2.7.9-2+deb8u1) ...
+Removing libpython2.7-minimal:amd64 (2.7.9-2+deb8u1) ...
+Purging configuration files for libpython2.7-minimal:amd64 (2.7.9-2+deb8u1) ...
+Removing libquadmath0:amd64 (4.9.2-10) ...
+Purging configuration files for libquadmath0:amd64 (4.9.2-10) ...
+Removing libreadline-dev:amd64 (6.3-8+b3) ...
+Removing libreadline6-dev:amd64 (6.3-8+b3) ...
+Removing m4 (1.4.17-4) ...
+Removing libsigsegv2:amd64 (2.10-4+b1) ...
+Purging configuration files for libsigsegv2:amd64 (2.10-4+b1) ...
+Removing libtsan0:amd64 (4.9.2-10) ...
+Purging configuration files for libtsan0:amd64 (4.9.2-10) ...
+Removing libubsan0:amd64 (4.9.2-10) ...
+Purging configuration files for libubsan0:amd64 (4.9.2-10) ...
+Removing libxslt1-dev:amd64 (1.1.28-2+deb8u2) ...
+Removing libxslt1.1:amd64 (1.1.28-2+deb8u2) ...
+Purging configuration files for libxslt1.1:amd64 (1.1.28-2+deb8u2) ...
+Removing libxml2-dev:amd64 (2.9.1+dfsg1-5+deb8u4) ...
+Removing libxml2:amd64 (2.9.1+dfsg1-5+deb8u4) ...
+Purging configuration files for libxml2:amd64 (2.9.1+dfsg1-5+deb8u4) ...
+Removing libyaml-0-2:amd64 (0.1.6-3) ...
+Purging configuration files for libyaml-0-2:amd64 (0.1.6-3) ...
+Removing make (4.0-8.1) ...
+Removing mime-support (3.58) ...
+Purging configuration files for mime-support (3.58) ...
+Removing perl-modules (5.20.2-3+deb8u6) ...
+Purging configuration files for perl-modules (5.20.2-3+deb8u6) ...
+Removing rubygems-integration (1.8) ...
+Removing xz-utils (5.1.1alpha+20120614-2+b3) ...
+Removing zlib1g-dev:amd64 (1:1.2.8.dfsg-2+b1) ...
+Processing triggers for libc-bin (2.19-18+deb8u6) ...
++ cd /
++ rm -r /usr/src/ruby
++ gem update --system 2.6.11
+ERROR:  While executing gem ... (Gem::Exception)
+    Unable to require openssl, install OpenSSL and rebuild ruby (preferred) or use non-HTTPS sources
+The command '/bin/sh -c set -ex 		&& buildDeps='     autoconf 		bison 		gcc 		libbz2-dev 		libgdbm-dev 		libglib2.0-dev 		libncurses-dev 		libreadline-dev 		libxml2-dev 		libxslt-dev 		make 		ruby 		wget 		xz-utils   ' 	&& apt-get update 	&& apt-get install -y --no-install-recommends $buildDeps 	&& rm -rf /var/lib/apt/lists/* 		&& wget -O ruby.tar.xz "https://cache.ruby-lang.org/pub/ruby/${RUBY_MAJOR%-rc}/ruby-$RUBY_VERSION.tar.xz" 	&& echo "$RUBY_DOWNLOAD_SHA256 *ruby.tar.xz" | sha256sum -c - 		&& mkdir -p /usr/src/ruby 	&& tar -xJf ruby.tar.xz -C /usr/src/ruby --strip-components=1 	&& rm ruby.tar.xz 	&& cd /usr/src/ruby 		&& { 		echo '#define ENABLE_PATH_CHECK 0'; 		echo; 		cat file.c; 	} > file.c.new 	&& mv file.c.new file.c 		&& autoconf&& ./configure --disable-install-doc --enable-shared 	&& make -j"$(nproc)" 	&& make install 		&& apt-get purge -y --auto-remove $buildDeps 	&& cd / 	&& rm -r /usr/src/ruby 		&& gem update --system "$RUBYGEMS_VERSION"' returned a non-zero code: 1
+
+ 17:34:35  ✘  ...work/docker/docker-ruby2.3.3-elasticsearch1.7.5  ♦️ ruby-2.1.4 
+$
